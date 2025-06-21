@@ -1,4 +1,13 @@
-# Dynamo Share - AI Engineering Resources for Claude Code
+### Support me
+
+I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
+
+Buy me a coffee:
+
+https://coff.ee/wirasm
+
+
+# AI Engineering Resources for Claude Code
 
 A comprehensive library of assets and prompts for AI Engineering, optimized for Claude Code. This repository provides the Product Requirement Prompt (PRP) methodology, pre-configured commands, and extensive documentation to enable AI-assisted development that delivers production-ready code on the first pass.
 
