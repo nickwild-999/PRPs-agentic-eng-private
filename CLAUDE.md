@@ -21,7 +21,7 @@ Open/Closed Principle: Software entities should be open for extension but closed
 ## Architecture
 Strict vertical slice architecture with tests that live next to the code they test. 
 
-src/
+src/project/
     __init__.py
     main.py
     tests/test_main.py
@@ -47,7 +47,7 @@ src/
 Features can also be part of moduels if the module for example is a api integration or a cli tool.
 
 eg 
-src/
+src/project/
     module_one/ (api integration with crm service)
         __init__.py
         module_one.py
