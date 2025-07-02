@@ -1,11 +1,34 @@
-### Support me
+### 🎯 Transform Your Team with AI Engineering Workshops
 
-I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
+**Ready to move beyond toy demos to production-ready AI systems?**
 
-Buy me a coffee:
+👉 **Book a workshop:** https://www.rasmuswiding.com/
 
-https://coff.ee/wirasm
+✅ **What you'll get:**
 
+- Put your team on a path to become AI power users
+- Learn the exact PRP methodology used by top engineering teams
+- Hands-on training with Claude Code, PRPs, and real codebases
+- From beginner to advanced AI engineering workshops for teams and individuals
+
+💡 **Perfect for:** Engineering teams, Product teams, and developers who want AI that actually works in production
+
+Let's talk!
+Contact me directly at rasmus@widinglabs.com
+
+### ☕ Support This Work
+
+**Found value in these resources?** This took many hours to create and refine through real-world usage.
+
+**Your support helps me:**
+
+- Keep creating cutting-edge AI engineering content
+- Maintain and improve these free resources
+- Share more workshops and tutorials
+
+👉 **Buy me a coffee:** https://coff.ee/wirasm
+
+_Every contribution helps me dedicate more time to advancing AI engineering practices for everyone._
 
 # AI Engineering Resources for Claude Code
 
@@ -27,32 +50,36 @@ Product Requirement Prompt (PRP) is a structured prompt methodology that supplie
 ### Option 1: Copy Resources to Your Existing Project
 
 1. **Copy the Claude commands** to your project:
+
    ```bash
    # From your project root
-   cp -r /path/to/dynamo-share/.claude/commands .claude/
+   cp -r /path/to/PRPs-agentic-eng/.claude/commands .claude/
    ```
 
 2. **Copy the PRP templates and runner**:
+
    ```bash
-   cp -r /path/to/dynamo-share/PRPs/templates PRPs/
-   cp -r /path/to/dynamo-share/PRPs/scrips PRPs/
-   cp /path/to/dynamo-share/PRPs/README.md PRPs/
+   cp -r /path/to/PRPs-agentic-eng/PRPs/templates PRPs/
+   cp -r /path/to/PRPs-agentic-eng/PRPs/scripts PRPs/
+   cp /path/to/PRPs-agentic-eng/PRPs/README.md PRPs/
    ```
 
 3. **Copy AI documentation** (optional but recommended):
    ```bash
-   cp -r /path/to/dynamo-share/PRPs/ai_docs PRPs/
+   cp -r /path/to/PRPs-agentic-eng/PRPs/ai_docs PRPs/
    ```
 
 ### Option 2: Clone and Start a New Project
 
 1. **Clone this repository**:
+
    ```bash
-   git clone https://github.com/yourusername/dynamo-share.git
-   cd dynamo-share
+   git clone https://github.com/Wirasm/PRPs-agentic-eng.git
+   cd PRPs-agentic-eng
    ```
 
 2. **Create your project structure**:
+
    ```bash
    # Example for a Python project
    mkdir -p src/tests
@@ -107,6 +134,7 @@ The `.claude/commands/` directory contains 12 pre-configured commands that appea
 ### Creating a PRP
 
 1. **Use the template** as a starting point:
+
    ```bash
    cp PRPs/templates/prp_base.md PRPs/my-feature.md
    ```
@@ -126,15 +154,16 @@ The `.claude/commands/` directory contains 12 pre-configured commands that appea
 ### Executing a PRP
 
 1. **Using the runner script**:
+
    ```bash
    # Interactive mode (recommended for development)
-   uv run PRPs/scrips/prp_runner.py --prp my-feature --interactive
-   
+   uv run PRPs/scripts/prp_runner.py --prp my-feature --interactive
+
    # Headless mode (for CI/CD)
-   uv run PRPs/scrips/prp_runner.py --prp my-feature --output-format json
-   
+   uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format json
+
    # Streaming JSON (for real-time monitoring)
-   uv run PRPs/scrips/prp_runner.py --prp my-feature --output-format stream-json
+   uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format stream-json
    ```
 
 2. **Using Claude commands**:
@@ -153,53 +182,67 @@ The `.claude/commands/` directory contains 12 pre-configured commands that appea
 
 ```markdown
 ## Goal
+
 Implement user authentication with JWT tokens
 
 ## Why
+
 - Enable secure user sessions
 - Support API authentication
 - Replace basic auth with industry standard
 
 ## What
+
 JWT-based authentication system with login, logout, and token refresh
 
 ### Success Criteria
+
 - [ ] Users can login with email/password
 - [ ] JWT tokens expire after 24 hours
 - [ ] Refresh tokens work correctly
 - [ ] All endpoints properly secured
 
 ## All Needed Context
+
 ### Documentation & References
+
 - url: https://jwt.io/introduction/
   why: JWT structure and best practices
-  
+
 - file: src/auth/basic_auth.py
   why: Current auth pattern to replace
-  
+
 - doc: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/
   section: OAuth2 with Password and JWT
 
 ### Known Gotchas
+
 # CRITICAL: Use RS256 algorithm for production
+
 # CRITICAL: Store refresh tokens in httpOnly cookies
+
 # CRITICAL: Implement token blacklist for logout
 
 ## Implementation Blueprint
+
 [... detailed implementation plan ...]
 
 ## Validation Loop
+
 ### Level 1: Syntax & Style
+
 ruff check src/ --fix
 mypy src/
 
 ### Level 2: Unit Tests
+
 uv run pytest tests/test_auth.py -v
 
 ### Level 3: Integration Test
+
 curl -X POST http://localhost:8000/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "test@example.com", "password": "testpass"}'
+ -H "Content-Type: application/json" \
+ -d '{"email": "test@example.com", "password": "testpass"}'
 ```
 
 ## Project Structure Recommendations
@@ -256,7 +299,7 @@ Use the PRP runner in headless mode:
 # GitHub Actions example
 - name: Execute PRP
   run: |
-    uv run PRPs/scrips/prp_runner.py \
+    uv run PRPs/scripts/prp_runner.py \
       --prp implement-feature \
       --output-format json > result.json
 ```
@@ -267,6 +310,7 @@ Create your own commands in `.claude/commands/`:
 
 ```markdown
 # .claude/commands/my-command.md
+
 # My Custom Command
 
 Do something specific to my project.
@@ -279,6 +323,7 @@ Do something specific to my project.
 ## Resources Included
 
 ### Documentation (PRPs/ai_docs/)
+
 - `cc_base.md` - Core Claude Code documentation
 - `cc_actions_sdk.md` - GitHub Actions and SDK integration
 - `cc_best_practices.md` - Best practices guide
@@ -286,11 +331,13 @@ Do something specific to my project.
 - `cc_tutorials.md` - Step-by-step tutorials
 
 ### Templates (PRPs/templates/)
+
 - `prp_base.md` - Comprehensive PRP template with validation
 - `prp_spec.md` - Specification template
 - `prp_planning_base.md` - Planning template with diagrams
 
 ### Example PRP
+
 - `example-from-workshop-mcp-crawl4ai-refactor-1.md` - Real-world refactoring example
 
 ## License
@@ -307,4 +354,4 @@ https://coff.ee/wirasm
 
 ---
 
-Remember: The goal is one-pass implementation success through comprehensive context. Happy coding with Claude Code! 
+Remember: The goal is one-pass implementation success through comprehensive context. Happy coding with Claude Code!
