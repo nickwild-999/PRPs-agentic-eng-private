@@ -1,3 +1,15 @@
+### ☕ Support This Work
+
+**Found value in these resources?**
+
+👉 **Buy me a coffee:** https://coff.ee/wirasm
+
+I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
+
+That will help me maintain and improve the resources available for free
+
+---
+
 ### 🎯 Transform Your Team with AI Engineering Workshops
 
 **Ready to move beyond toy demos to production-ready AI systems?**
@@ -15,20 +27,6 @@
 
 Let's talk!
 Contact me directly at rasmus@widinglabs.com
-
-### ☕ Support This Work
-
-**Found value in these resources?** This took many hours to create and refine through real-world usage.
-
-**Your support helps me:**
-
-- Keep creating cutting-edge AI engineering content
-- Maintain and improve these free resources
-- Share more workshops and tutorials
-
-👉 **Buy me a coffee:** https://coff.ee/wirasm
-
-_Every contribution helps me dedicate more time to advancing AI engineering practices for everyone._
 
 # AI Engineering Resources for Claude Code
 
@@ -348,9 +346,7 @@ MIT License
 
 I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
 
-Buy me a coffee:
-
-https://coff.ee/wirasm
+👉 **Buy me a coffee:** https://coff.ee/wirasm
 
 ---
 
