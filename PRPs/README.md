@@ -38,8 +38,7 @@ The industry mantra “Garbage In → Garbage Out” applies doubly to prompt en
 
 ## In short
 
-A PRP is PRD + curated codebase intelligence + agent/runbook—the minimum viable packet an AI needs to ship production-ready code on the first pass.
+A PRP is PRD + curated codebase intelligence + agent/runbook—the minimum viable packet an AI needs to plausibly ship production-ready code on the first pass.
 
 The PRP can be small and focusing on a single task or large and covering multiple tasks.
 The true power of PRP is in the ability to chain tasks together in a PRP to build, self-validate and ship complex features.
-

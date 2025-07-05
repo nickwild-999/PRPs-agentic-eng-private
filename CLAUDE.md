@@ -2,207 +2,144 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Core Principles
+## Project Nature
 
-KISS (Keep It Simple, Stupid): Simplicity should be a key goal in design. Choose straightforward solutions over complex ones whenever possible. Simple solutions are easier to understand, maintain, and debug.
+This is a **PRP (Product Requirement Prompt) Framework** repository, not a traditional software project. The core concept: **"PRP = PRD + curated codebase intelligence + agent/runbook"** - designed to enable AI agents to ship production-ready code on the first pass.
 
-YAGNI (You Aren't Gonna Need It): Avoid building functionality on speculation. Implement features only when they are needed, not when you anticipate they might be useful in the future.
+## Core Architecture
 
-Dependency Inversion: High-level modules should not depend on low-level modules. Both should depend on abstractions. This principle enables flexibility and testability.
+### Command-Driven System
 
-Open/Closed Principle: Software entities should be open for extension but closed for modification. Design your systems so that new functionality can be added with minimal changes to existing code.
+- **28+ pre-configured Claude Code commands** in `.claude/commands/`
+- Commands organized by function:
+  - `PRPs/` - PRP creation and execution workflows
+  - `development/` - Core development utilities (prime-core, onboarding, debug)
+  - `code-quality/` - Review and refactoring commands
+  - `rapid-development/experimental/` - Parallel PRP creation and hackathon tools
+  - `git-operations/` - Conflict resolution and smart git operations
 
-## 🧱 Code Structure & Modularity
-- **Never create a file longer than 500 lines of code.** If a file approaches this limit, refactor by splitting it into modules or helper files.
-- **Functions should be short and focused sub 50 lines of code** and have a single responsibility.
-- **Classes should be short and focused sub 50 lines of code** and have a single responsibility.
-- **Organize code into clearly separated modules**, grouped by feature or responsibility.
+### Template-Based Methodology
 
-## Architecture
-Strict vertical slice architecture with tests that live next to the code they test. 
+- **PRP Templates** in `PRPs/templates/` follow structured format with validation loops
+- **Context-Rich Approach**: Every PRP must include comprehensive documentation, examples, and gotchas
+- **Validation-First Design**: Each PRP contains executable validation gates (syntax, tests, integration)
 
-src/project/
-    __init__.py
-    main.py
-    tests/test_main.py
-    conftest.py
-    module_one/ (eg. database, core, auth)
-        __init__.py
-        module_one.py
-        tests/
-            test_module_one.py
-    module_two/ (eg. api, ui, cli)
-        __init__.py
-        module_two.py
-        tests/
-            test_module_two.py
+### AI Documentation Curation
 
-    features/ (eg. business logic, tools, etc.)
-        feature_one/
-            __init__.py
-            feature.py
-            tests/
-                test_feature.py
+- `PRPs/ai_docs/` contains curated Claude Code documentation for context injection
+- `claude_md_files/` provides framework-specific CLAUDE.md examples
 
-Features can also be part of moduels if the module for example is a api integration or a cli tool.
+## Development Commands
 
-eg 
-src/project/
-    module_one/ (api integration with crm service)
-        __init__.py
-        module_one.py
-        tests/
-            test_module_one.py
-        features/
-            feature_one/ (CRM service integration slice)
-                __init__.py
-                feature.py
-                tests/
-                    test_feature.py
-
-## Testing
-
-**Always create Pytest unit tests for new features**
-(functions, classes, routes, etc)
-Tests are always created in the same directory as the code they test in a tests/ directory. Create the tests directory if it doesn't exist.
-
-**After updating any logic**, check whether existing unit tests need to be updated. If so, do it following the implementation.
-
-Always test individual functions and classes.
-
-## Style & Conventions
-
-### 📎 Style & Conventions
-- **Use Python** as the primary language.
-- **Follow PEP8**, always use type hints, and format with `ruff`.
-- **Use `pydanticv2` for data validation**.
-- **ALWAYS use classes, data types, data models, for typesafety and verifiability**
-- **ALWAYS use docstrings for every function** using the Google style:
-  ```python
-  def example():
-      """
-      Brief summary.
-
-      Args:
-          param1 (type): Description.
-
-      Returns:
-          type: Description.
-          
-      Raises:
-          Exception: Description.
-      """
-  ```
-
-## 🛠️ Environment Setup
+### Python Package Management
 
 ```bash
-# Create and activate virtual environment with uv
-uv venv
-source .venv/bin/activate  # On Unix/macOS
-# .venv\Scripts\activate  # On Windows
-
-# Install dependencies
-uv sync
-
-# Install package in development mode
-uv pip install -e .
+# This project uses UV package manager
+uv venv                    # Create virtual environment
+uv sync                    # Install dependencies
+uv run [script]            # Run Python scripts
 ```
 
-## 🛠️ Development Commands
+### PRP Execution
 
 ```bash
-# Run all tests
-uv run pytest
+# Interactive mode (recommended for development)
+uv run PRPs/scripts/prp_runner.py --prp [prp-name] --interactive
 
-# Run specific tests
-uv run pytest concept_library/full_review_loop/tests/ -v
+# Headless mode (for CI/CD)
+uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
 
-# Format code
-uv run ruff format .
-
-# Run linter
-uv run ruff check .
-
-# Run type checker  
-uv run mypy .
+# Streaming JSON (for real-time monitoring)
+uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format stream-json
 ```
 
-## 🛠️ UV Package Management
+### Key Claude Commands
 
-This project uses UV for Python package management. Key commands include:
+- `/prp-base-create` - Generate comprehensive PRPs with research
+- `/prp-base-execute` - Execute PRPs against codebase
+- `/prp-planning-create` - Create planning documents with diagrams
+- `/prime-core` - Prime Claude with project context
+- `/review-staged-unstaged` - Review git changes using PRP methodology
+
+## Critical Success Patterns
+
+### The PRP Methodology
+
+1. **Context is King**: Include ALL necessary documentation, examples, and caveats
+2. **Validation Loops**: Provide executable tests/lints the AI can run and fix
+3. **Information Dense**: Use keywords and patterns from the codebase
+4. **Progressive Success**: Start simple, validate, then enhance
+
+### PRP Structure Requirements
+
+- **Goal**: Specific end state and desires
+- **Why**: Business value and user impact
+- **What**: User-visible behavior and technical requirements
+- **All Needed Context**: Documentation URLs, code examples, gotchas, patterns
+- **Implementation Blueprint**: Pseudocode with critical details and task lists
+- **Validation Loop**: Executable commands for syntax, tests, integration
+
+### Validation Gates (Must be Executable)
 
 ```bash
-# Create virtual environment
-uv venv
+# Level 1: Syntax & Style
+ruff check --fix && mypy .
 
-# Install dependencies from pyproject.toml
-uv sync
+# Level 2: Unit Tests
+uv run pytest tests/ -v
 
-# Install a specific package
-uv add requests
-
-# Remove a package
-uv remove requests
-
-# Run a Python script or command
-uv run python script.py
-uv run pytest
-
-# Install editable packages
-uv pip install -e .
+# Level 3: Integration
+curl -X POST http://localhost:8000/endpoint -H "Content-Type: application/json" -d '{...}'
 ```
 
-When running scripts or tools, always use `uv run` to ensure proper virtual environment activation:
+## Anti-Patterns to Avoid
 
-```bash
-# Preferred way to run commands
-uv run pytest
-uv run black .
+- L Don't create minimal context prompts - context is everything
+- L Don't skip validation steps - they're critical for one-pass success
+- L Don't ignore the structured PRP format - it's battle-tested
+- L Don't create new patterns when existing templates work
+- L Don't hardcode values that should be config
+- L Don't catch all exceptions - be specific
 
-# Running tools without installing
-uvx black .
-uvx ruff check .
+## Working with This Framework
+
+### When Creating PRPs
+
+1. **Research First**: Analyze codebase patterns and external documentation
+2. **Use Templates**: Start with `PRPs/templates/prp_base.md`
+3. **Include Context**: Add URLs, code examples, gotchas, and patterns
+4. **Validate Early**: Include executable validation commands
+5. **Score Confidence**: Rate PRP 1-10 for one-pass implementation success
+
+### When Executing PRPs
+
+1. **Load PRP**: Read and understand all context and requirements
+2. **ULTRATHINK**: Create comprehensive plan, break down into todos
+3. **Execute**: Implement following the blueprint
+4. **Validate**: Run each validation command, fix failures
+5. **Complete**: Ensure all checklist items done
+
+### Command Usage
+
+- Access via `/` prefix in Claude Code
+- Commands are self-documenting with argument placeholders
+- Use parallel creation commands for rapid development
+- Leverage existing review and refactoring commands
+
+## Project Structure Understanding
+
+```
+PRPs-agentic-eng/
+.claude/
+  commands/           # 28+ Claude Code commands
+  settings.local.json # Tool permissions
+PRPs/
+  templates/          # PRP templates with validation
+  scripts/           # PRP runner and utilities
+  ai_docs/           # Curated Claude Code documentation
+   *.md               # Active and example PRPs
+ claude_md_files/        # Framework-specific CLAUDE.md examples
+ pyproject.toml         # Python package configuration
 ```
 
-## 🛠️ BRANCHING STRATEGY
-
-This repository follows a develop → main branching strategy, where:
-
-- `main` is the production branch containing stable releases
-- `develop` is the integration branch where features are merged
-- Feature branches are created from `develop` for work in progress
-
-
-When creating branches, follow these naming conventions:
-
-- Feature branches: `feature/descriptive-name`
-- Bug fix branches: `fix/issue-description`
-- Documentation branches: `docs/what-is-changing`
-- Refactoring branches: `refactor/what-is-changing`
-
-
-## Behavioural Guidelines
-
-- Always use `uv` for package management.
-- Always use `ruff` for linting.
-
-- *** NEVER ASSUME OR GUESS ***
-- When in doubt, ask for clarification or ask for help. more often than not youcan do websearch to find relevant examples of check ai_docs/ for examples that the user have added. 
-
-- **Always confirm file paths & module names** exist before using them.
-
-- **Comment non-obvious code** and ensure everything is understandable to a mid-level developer.
-- When writing complex logic, **add an inline `# Reason:` comment** explaining the why, not just the what.
-
-- **KEEP README.md UPDATED**
-- Whenever you make changes to the codebase, update the README.md file to reflect the changes. Espeially if you add configuration changes or new features.
-
-- **ALWAYS keep CLAUDE.md UPDATED**
-- Add new dependencies to CLAUDE.md
-- Add important types and patterns to CLAUDE.md
-
-## IMPORTANT TYPES & PATTERNS
-
-### 
-> add important types and patterns here
+Remember: This framework is about **one-pass implementation success through comprehensive context**. Every PRP should contain enough context for an AI agent to implement working code without additional research.
