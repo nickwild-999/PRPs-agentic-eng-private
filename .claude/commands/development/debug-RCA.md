@@ -3,6 +3,7 @@
 Systematically debug and diagnose the reported problem.
 
 ## Problem Description
+
 $ARGUMENTS
 
 ## Debugging Process
@@ -14,10 +15,11 @@ $ARGUMENTS
    - Document the expected vs actual behavior
 
 2. **Gather Information**
+
    ```bash
    # Check recent changes
    git log --oneline -10
-   
+
    # Look for error patterns in logs
    # Search for related error messages
    ```
@@ -73,23 +75,29 @@ $ARGUMENTS
    - Add test to prevent recurrence
 
 8. **Document Findings**
+
    ```markdown
    ## Debug Summary
-   
+
    ### Issue
+
    [What was broken]
-   
+
    ### Root Cause
+
    [Why it was broken]
-   
+
    ### Fix
+
    [What was changed]
-   
+
    ### Prevention
+
    [How to avoid similar issues]
    ```
 
 ## Debug Checklist
+
 - [ ] Issue reproduced locally
 - [ ] Root cause identified
 - [ ] Fix implemented
