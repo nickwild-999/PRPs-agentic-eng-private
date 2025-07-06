@@ -241,6 +241,22 @@ const { title, description, image, class: className } = Astro.props;
 
 ## 📦 Package Management & Dependencies
 
+### MUST Use pnpm (MANDATORY)
+
+**CRITICAL**: Always use pnpm for Astro projects for better performance and dependency management.
+
+```bash
+# Install pnpm globally
+npm install -g pnpm
+# or
+curl -fsSL https://get.pnpm.io/install.sh | sh
+
+# Project setup
+pnpm create astro@latest
+pnpm install
+pnpm dev
+```
+
 ### Essential Astro 5 Dependencies
 
 ```json
@@ -264,38 +280,44 @@ const { title, description, image, class: className } = Astro.props;
 
 ```bash
 # React integration
+pnpm astro add react
+# or
 npx astro add react
 
 # Vue integration
-npx astro add vue
+pnpm astro add vue
 
 # Svelte integration
-npx astro add svelte
+pnpm astro add svelte
 
 # Preact integration
-npx astro add preact
+pnpm astro add preact
 
 # SolidJS integration
-npx astro add solid
+pnpm astro add solid
 
 # Multiple frameworks (framework-agnostic approach)
-npx astro add react vue svelte
+pnpm astro add react vue svelte
 ```
 
 ### Essential Integrations
 
 ```bash
 # Styling and UI
-npx astro add tailwind
-npx astro add mdx
+pnpm astro add tailwind
+pnpm astro add mdx
 
 # Performance and SEO
-npx astro add sitemap
-npx astro add compress
+pnpm astro add sitemap
+pnpm astro add compress
 
 # Content and CMS
-npx astro add @astrojs/content
-npx astro add @astrojs/rss
+pnpm astro add @astrojs/content
+pnpm astro add @astrojs/rss
+
+# Manual package installation when needed
+pnpm add package-name
+pnpm add -D dev-package-name
 ```
 
 ## 🛡️ Data Validation with Zod (MANDATORY FOR CONTENT)
@@ -898,6 +920,8 @@ export default defineConfig({
 
 ## 📋 Development Commands
 
+### pnpm Scripts (MANDATORY)
+
 ```json
 {
   "scripts": {
@@ -912,24 +936,53 @@ export default defineConfig({
     "lint": "eslint . --ext .js,.ts,.astro --max-warnings 0",
     "format": "prettier --write \"src/**/*.{astro,js,ts,md,json}\"",
     "format:check": "prettier --check \"src/**/*.{astro,js,ts,md,json}\"",
-    "validate": "npm run check && npm run lint && npm run test:coverage"
+    "validate": "pnpm run check && pnpm run lint && pnpm run test:coverage"
   }
 }
 ```
 
+### pnpm Command Reference
+
+```bash
+# Development
+pnpm dev              # Start development server
+pnpm build            # Build for production
+pnpm preview          # Preview production build
+
+# Code Quality
+pnpm run check        # TypeScript and Astro validation
+pnpm run lint         # ESLint with zero warnings
+pnpm run format       # Format code with Prettier
+pnpm run validate     # Run all quality checks
+
+# Testing
+pnpm test             # Run tests
+pnpm run test:coverage # Run tests with coverage
+
+# Package Management
+pnpm install          # Install dependencies
+pnpm add package      # Add runtime dependency
+pnpm add -D package   # Add dev dependency
+pnpm update           # Update dependencies
+pnpm audit            # Security audit
+pnpm list             # List installed packages
+pnpm outdated         # Check for outdated packages
+```
+
 ## ⚠️ CRITICAL GUIDELINES (MUST FOLLOW ALL)
 
-1. **ENFORCE TypeScript strict mode** - Use `astro/tsconfigs/strict` template
-2. **VALIDATE all content with Zod** - Content collections MUST have schemas
-3. **MINIMUM 80% test coverage** - Use Vitest with Container API
-4. **MUST understand hydration strategy** - Use appropriate client directives
-5. **MAXIMUM 500 lines per file** - Split large components
-6. **MUST use semantic imports** - `import type` for type-only imports
-7. **MUST optimize images** - Use Astro's Image component
-8. **MUST validate environment variables** - Use astro:env for type safety
-9. **NEVER over-hydrate** - Default to static, hydrate only when needed
-10. **MUST use framework components sparingly** - Prefer Astro components for static content
-11. **MUST pass astro check** - Zero TypeScript errors required
+1. **MUST use pnpm** - Never use npm or yarn for package management
+2. **ENFORCE TypeScript strict mode** - Use `astro/tsconfigs/strict` template
+3. **VALIDATE all content with Zod** - Content collections MUST have schemas
+4. **MINIMUM 80% test coverage** - Use Vitest with Container API
+5. **MUST understand hydration strategy** - Use appropriate client directives
+6. **MAXIMUM 500 lines per file** - Split large components
+7. **MUST use semantic imports** - `import type` for type-only imports
+8. **MUST optimize images** - Use Astro's Image component
+9. **MUST validate environment variables** - Use astro:env for type safety
+10. **NEVER over-hydrate** - Default to static, hydrate only when needed
+11. **MUST use framework components sparingly** - Prefer Astro components for static content
+12. **MUST pass astro check** - Zero TypeScript errors required
 
 ## 📋 Pre-commit Checklist (MUST COMPLETE ALL)
 
@@ -950,6 +1003,7 @@ export default defineConfig({
 
 ### FORBIDDEN Practices
 
+- **NEVER use npm or yarn** - MUST use pnpm for all package management
 - **NEVER use client:load** without justification - prefer client:visible or client:idle
 - **NEVER skip content validation** - all content MUST have Zod schemas
 - **NEVER ignore hydration impact** - understand JavaScript bundle size
@@ -960,6 +1014,7 @@ export default defineConfig({
 - **NEVER mix concerns** - separate static content from interactive islands
 - **NEVER use any type** - leverage Astro's built-in type safety
 - **NEVER ignore build warnings** - address all build and TypeScript issues
+- **NEVER use npx for regular commands** - use pnpm equivalents when available
 
 ---
 
