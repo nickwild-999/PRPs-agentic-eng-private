@@ -706,6 +706,39 @@ logger.info(
 - **Test your code** - No feature is complete without tests
 - **Document your decisions** - Future developers (including yourself) will thank you
 
+## 🔍 Search Command Requirements
+
+**CRITICAL**: Always use `rg` (ripgrep) instead of traditional `grep` and `find` commands:
+
+```bash
+# ❌ Don't use grep
+grep -r "pattern" .
+
+# ✅ Use rg instead
+rg "pattern"
+
+# ❌ Don't use find with name
+find . -name "*.py"
+
+# ✅ Use rg with file filtering
+rg --files | rg "\.py$"
+# or
+rg --files -g "*.py"
+```
+
+**Enforcement Rules:**
+
+```
+(
+    r"^grep\b(?!.*\|)",
+    "Use 'rg' (ripgrep) instead of 'grep' for better performance and features",
+),
+(
+    r"^find\s+\S+\s+-name\b",
+    "Use 'rg --files | rg pattern' or 'rg --files -g pattern' instead of 'find -name' for better performance",
+),
+```
+
 ## 🚀 GitHub Flow Workflow Summary
 
 main (protected) ←── PR ←── feature/your-feature
