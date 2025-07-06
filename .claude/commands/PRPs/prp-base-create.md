@@ -20,7 +20,7 @@ The AI agent only gets the context you are appending to the PRP and its own trai
 2. **External Research at scale**
    - Create clear todos and spawn with instructions subagents to do deep research for similar features/patterns online and include urls to documentation and examples
    - Library documentation (include specific URLs)
-   - For critical pieces of documentation add a .md file to PRPs/ai_docs and refrence it in the PRP with cler reasoning and instructions
+   - For critical pieces of documentation add a .md file to PRPs/ai_docs and reference it in the PRP with clear reasoning and instructions
    - Implementation examples (GitHub/StackOverflow/blogs)
    - Best practices and common pitfalls found during research
    - Use the batch tools to spawn subagents to search for similar features/patterns online and include urls to documentation and examples
@@ -45,7 +45,7 @@ Using PRPs/templates/prp_base.md as template:
 - Start with pseudocode showing approach
 - Reference real files for patterns
 - Include error handling strategy
-- List tasks to be completed to fullfill the PRP in the order they should be completed, use the pattern in the PRP with inforamtion dense keywords
+- List tasks to be completed to fulfill the PRP in the order they should be completed, use the pattern in the PRP with information dense keywords
 
 ### Validation Gates (Must be Executable by the AI agent)
 
