@@ -1,509 +1,630 @@
-# Enterprise deployment overview
+# Troubleshooting
 
-> Learn how Claude Code can integrate with various third-party services and infrastructure to meet enterprise deployment requirements.
+> Discover solutions to common issues with Claude Code installation and usage.
 
-This page provides an overview of available deployment options and helps you choose the right configuration for your organization.
+## Common installation issues
 
-## Provider comparison
+### Windows installation issues: errors in WSL
 
-<table>
-  <thead>
-    <tr>
-      <th>Feature</th>
-      <th>Anthropic</th>
-      <th>Amazon Bedrock</th>
-      <th>Google Vertex AI</th>
-    </tr>
-  </thead>
+You might encounter the following issues in WSL:
 
-  <tbody>
-    <tr>
-      <td>Regions</td>
-      <td>Supported [countries](https://www.anthropic.com/supported-countries)</td>
-      <td>Multiple AWS [regions](https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html)</td>
-      <td>Multiple GCP [regions](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations)</td>
-    </tr>
+**OS/platform detection issues**: If you receive an error during installation, WSL may be using Windows `npm`. Try:
 
-    <tr>
-      <td>Prompt caching</td>
-      <td>Enabled by default</td>
-      <td>Enabled by default</td>
-      <td>Contact Google for enablement</td>
-    </tr>
+- Run `npm config set os linux` before installation
+- Install with `npm install -g @anthropic-ai/claude-code --force --no-os-check` (Do NOT use `sudo`)
 
-    <tr>
-      <td>Authentication</td>
-      <td>API key</td>
-      <td>AWS credentials (IAM)</td>
-      <td>GCP credentials (OAuth/Service Account)</td>
-    </tr>
+**Node not found errors**: If you see `exec: node: not found` when running `claude`, your WSL environment may be using a Windows installation of Node.js. You can confirm this with `which npm` and `which node`, which should point to Linux paths starting with `/usr/` rather than `/mnt/c/`. To fix this, try installing Node via your Linux distribution's package manager or via [`nvm`](https://github.com/nvm-sh/nvm).
 
-    <tr>
-      <td>Cost tracking</td>
-      <td>Dashboard</td>
-      <td>AWS Cost Explorer</td>
-      <td>GCP Billing</td>
-    </tr>
+### Linux and Mac installation issues: permission or command not found errors
 
-    <tr>
-      <td>Enterprise features</td>
-      <td>Teams, usage monitoring</td>
-      <td>IAM policies, CloudTrail</td>
-      <td>IAM roles, Cloud Audit Logs</td>
-    </tr>
+When installing Claude Code with npm, `PATH` problems may prevent access to `claude`.
+You may also encounter permission errors if your npm global prefix is not user writable (eg. `/usr`, or `/usr/local`).
 
-  </tbody>
-</table>
+#### Recommended solution: Native Claude Code installation
 
-## Cloud providers
-
-<CardGroup cols={2}>
-  <Card title="Amazon Bedrock" icon="aws" href="/en/docs/claude-code/amazon-bedrock">
-    Use Claude models through AWS infrastructure with IAM-based authentication and AWS-native monitoring
-  </Card>
-
-  <Card title="Google Vertex AI" icon="google" href="/en/docs/claude-code/google-vertex-ai">
-    Access Claude models via Google Cloud Platform with enterprise-grade security and compliance
-  </Card>
-</CardGroup>
-
-## Corporate infrastructure
-
-<CardGroup cols={2}>
-  <Card title="Corporate Proxy" icon="shield" href="/en/docs/claude-code/corporate-proxy">
-    Configure Claude Code to work with your organization's proxy servers and SSL/TLS requirements
-  </Card>
-
-  <Card title="LLM Gateway" icon="server" href="/en/docs/claude-code/llm-gateway">
-    Deploy centralized model access with usage tracking, budgeting, and audit logging
-  </Card>
-</CardGroup>
-
-## Configuration overview
-
-Claude Code supports flexible configuration options that allow you to combine different providers and infrastructure:
+Claude Code has a native installation that doesn't depend on npm or Node.js.
 
 <Note>
-  Understand the difference between:
-
-- **Corporate proxy**: An HTTP/HTTPS proxy for routing traffic (set via `HTTPS_PROXY` or `HTTP_PROXY`)
-- **LLM Gateway**: A service that handles authentication and provides provider-compatible endpoints (set via `ANTHROPIC_BASE_URL`, `ANTHROPIC_BEDROCK_BASE_URL`, or `ANTHROPIC_VERTEX_BASE_URL`)
-
-Both configurations can be used in tandem.
+  The native Claude Code installer is currently in beta.
 </Note>
 
-### Using Bedrock with corporate proxy
+Use the following command to run the native installer.
 
-Route Bedrock traffic through a corporate HTTP/HTTPS proxy:
-
-```bash
-# Enable Bedrock
-export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1
-
-# Configure corporate proxy
-export HTTPS_PROXY='https://proxy.example.com:8080'
-```
-
-### Using Bedrock with LLM Gateway
-
-Use a gateway service that provides Bedrock-compatible endpoints:
+**macOS, Linux, WSL:**
 
 ```bash
-# Enable Bedrock
-export CLAUDE_CODE_USE_BEDROCK=1
+# Install stable version (default)
+curl -fsSL https://claude.ai/install.sh | bash
 
-# Configure LLM gateway
-export ANTHROPIC_BEDROCK_BASE_URL='https://your-llm-gateway.com/bedrock'
-export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1  # If gateway handles AWS auth
+# Install latest version
+curl -fsSL https://claude.ai/install.sh | bash -s latest
+
+# Install specific version number
+curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
 ```
 
-### Using Vertex AI with corporate proxy
+**Windows PowerShell:**
 
-Route Vertex AI traffic through a corporate HTTP/HTTPS proxy:
+```powershell
+# Install stable version (default)
+irm https://claude.ai/install.ps1 | iex
 
-```bash
-# Enable Vertex
-export CLAUDE_CODE_USE_VERTEX=1
-export CLOUD_ML_REGION=us-east5
-export ANTHROPIC_VERTEX_PROJECT_ID=your-project-id
+# Install latest version
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) latest
 
-# Configure corporate proxy
-export HTTPS_PROXY='https://proxy.example.com:8080'
+# Install specific version number
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
+
 ```
 
-### Using Vertex AI with LLM Gateway
-
-Combine Google Vertex AI models with an LLM gateway for centralized management:
-
-```bash
-# Enable Vertex
-export CLAUDE_CODE_USE_VERTEX=1
-
-# Configure LLM gateway
-export ANTHROPIC_VERTEX_BASE_URL='https://your-llm-gateway.com/vertex'
-export CLAUDE_CODE_SKIP_VERTEX_AUTH=1  # If gateway handles GCP auth
-```
-
-### Authentication configuration
-
-Claude Code uses the `ANTHROPIC_AUTH_TOKEN` for both `Authorization` and `Proxy-Authorization` headers when needed. The `SKIP_AUTH` flags (`CLAUDE_CODE_SKIP_BEDROCK_AUTH`, `CLAUDE_CODE_SKIP_VERTEX_AUTH`) are used in LLM gateway scenarios where the gateway handles provider authentication.
-
-## Choosing the right deployment configuration
-
-Consider these factors when selecting your deployment approach:
-
-### Direct provider access
-
-Best for organizations that:
-
-- Want the simplest setup
-- Have existing AWS or GCP infrastructure
-- Need provider-native monitoring and compliance
-
-### Corporate proxy
-
-Best for organizations that:
-
-- Have existing corporate proxy requirements
-- Need traffic monitoring and compliance
-- Must route all traffic through specific network paths
-
-### LLM Gateway
-
-Best for organizations that:
-
-- Need usage tracking across teams
-- Want to dynamically switch between models
-- Require custom rate limiting or budgets
-- Need centralized authentication management
-
-## Debugging
-
-When debugging your deployment:
-
-- Use the `claude /status` [slash command](/en/docs/claude-code/slash-commands). This command provides observability into any applied authentication, proxy, and URL settings.
-- Set environment variable `export ANTHROPIC_LOG=debug` to log requests.
-
-## Best practices for organizations
-
-1. We strongly recommend investing in documentation so that Claude Code understands your codebase. Many organizations make a `CLAUDE.md` file (which we also refer to as memory) in the root of the repository that contains the system architecture, how to run tests and other common commands, and best practices for contributing to the codebase. This file is typically checked into source control so that all users can benefit from it. [Learn more](/en/docs/claude-code/memory).
-2. If you have a custom development environment, we find that creating a "one click" way to install Claude Code is key to growing adoption across an organization.
-3. Encourage new users to try Claude Code for codebase Q\&A, or on smaller bug fixes or feature requests. Ask Claude Code to make a plan. Check Claude's suggestions and give feedback if it's off-track. Over time, as users understand this new paradigm better, then they'll be more effective at letting Claude Code run more agentically.
-4. Security teams can configure managed permissions for what Claude Code is and is not allowed to do, which cannot be overwritten by local configuration. [Learn more](/en/docs/claude-code/security).
-5. MCP is a great way to give Claude Code more information, such as connecting to ticket management systems or error logs. We recommend that one central team configures MCP servers and checks a `.mcp.json` configuration into the codebase so that all users benefit. [Learn more](/en/docs/claude-code/mcp).
-
-At Anthropic, we trust Claude Code to power development across every Anthropic codebase. We hope you enjoy using Claude Code as much as we do!
-
-## Next steps
-
-- [Set up Amazon Bedrock](/en/docs/claude-code/amazon-bedrock) for AWS-native deployment
-- [Configure Google Vertex AI](/en/docs/claude-code/google-vertex-ai) for GCP deployment
-- [Implement Corporate Proxy](/en/docs/claude-code/corporate-proxy) for network requirements
-- [Deploy LLM Gateway](/en/docs/claude-code/llm-gateway) for enterprise management
-- [Settings](/en/docs/claude-code/settings) for configuration options and environment variables
-
-# Claude Code on Amazon Bedrock
-
-> Learn about configuring Claude Code through Amazon Bedrock, including setup, IAM configuration, and troubleshooting.
-
-## Prerequisites
-
-Before configuring Claude Code with Bedrock, ensure you have:
-
-- An AWS account with Bedrock access enabled
-- Access to desired Claude models (e.g., Claude Sonnet 4) in Bedrock
-- AWS CLI installed and configured (optional - only needed if you don't have another mechanism for getting credentials)
-- Appropriate IAM permissions
-
-## Setup
-
-### 1. Enable model access
-
-First, ensure you have access to the required Claude models in your AWS account:
-
-1. Navigate to the [Amazon Bedrock console](https://console.aws.amazon.com/bedrock/)
-2. Go to **Model access** in the left navigation
-3. Request access to desired Claude models (e.g., Claude Sonnet 4)
-4. Wait for approval (usually instant for most regions)
-
-### 2. Configure AWS credentials
-
-Claude Code uses the default AWS SDK credential chain. Set up your credentials using one of these methods:
-
-<Note>
-  Claude Code does not currently support dynamic credential management (such as automatically calling `aws sts assume-role`). You will need to run `aws configure`, `aws sso login`, or set the `AWS_` environment variables yourself.
-</Note>
-
-**Option A: AWS CLI configuration**
-
-```bash
-aws configure
-```
-
-**Option B: Environment variables (access key)**
-
-```bash
-export AWS_ACCESS_KEY_ID=your-access-key-id
-export AWS_SECRET_ACCESS_KEY=your-secret-access-key
-export AWS_SESSION_TOKEN=your-session-token
-```
-
-**Option C: Environment variables (SSO profile)**
-
-```bash
-aws sso login --profile=<your-profile-name>
-
-export AWS_PROFILE=your-profile-name
-```
-
-### 3. Configure Claude Code
-
-Set the following environment variables to enable Bedrock:
-
-```bash
-# Enable Bedrock integration
-export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1  # or your preferred region
-```
-
-<Note>
-  `AWS_REGION` is a required environment variable. Claude Code does not read from the `.aws` config file for this setting.
-</Note>
-
-### 4. Model configuration
-
-Claude Code uses these default models for Bedrock:
-
-| Model type       | Default value                                  |
-| :--------------- | :--------------------------------------------- |
-| Primary model    | `us.anthropic.claude-3-7-sonnet-20250219-v1:0` |
-| Small/fast model | `us.anthropic.claude-3-5-haiku-20241022-v1:0`  |
-
-To customize models, use one of these methods:
-
-```bash
-# Using inference profile ID
-export ANTHROPIC_MODEL='us.anthropic.claude-opus-4-20250514-v1:0'
-export ANTHROPIC_SMALL_FAST_MODEL='us.anthropic.claude-3-5-haiku-20241022-v1:0'
-
-# Using application inference profile ARN
-export ANTHROPIC_MODEL='arn:aws:bedrock:us-east-2:your-account-id:application-inference-profile/your-model-id'
-```
-
-## IAM configuration
-
-Create an IAM policy with the required permissions for Claude Code.
-
-For details, see [Bedrock IAM documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/security-iam.html).
-
-<Note>
-  We recommend creating a dedicated AWS account for Claude Code to simplify cost tracking and access control.
-</Note>
-
-## Troubleshooting
-
-If you encounter region issues:
-
-- Check model availability: `aws bedrock list-inference-profiles --region your-region`
-- Switch to a supported region: `export AWS_REGION=us-east-1`
-- Consider using inference profiles for cross-region access
-
-If you receive an error "on-demand throughput isn’t supported":
-
-- Specify the model as an [inference profile](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html) ID
-
-## Additional resources
-
-- [Bedrock documentation](https://docs.aws.amazon.com/bedrock/)
-- [Bedrock pricing](https://aws.amazon.com/bedrock/pricing/)
-- [Bedrock inference profiles](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html)
-- [Claude Code on Amazon Bedrock: Quick Setup Guide](https://community.aws/content/2tXkZKrZzlrlu0KfH8gST5Dkppq/claude-code-on-amazon-bedrock-quick-setup-guide)
-
-# Claude Code on Google Vertex AI
-
-> Learn about configuring Claude Code through Google Vertex AI, including setup, IAM configuration, and troubleshooting.
-
-## Prerequisites
-
-Before configuring Claude Code with Vertex AI, ensure you have:
-
-- A Google Cloud Platform (GCP) account with billing enabled
-- A GCP project with Vertex AI API enabled
-- Access to desired Claude models (e.g., Claude Sonnet 4)
-- Google Cloud SDK (`gcloud`) installed and configured
-- Quota allocated in desired GCP region
-
-<Warning>
-  Vertex AI may not support the Claude Code default models on non-`us-east5` regions. Ensure you are using `us-east5` and have quota allocated, or switch to supported models.
-</Warning>
-
-## Setup
-
-### 1. Enable Vertex AI API
-
-Enable the Vertex AI API in your GCP project:
-
-```bash
-# Set your project ID
-gcloud config set project YOUR-PROJECT-ID
-
-# Enable Vertex AI API
-gcloud services enable aiplatform.googleapis.com
-```
-
-### 2. Request model access
-
-Request access to Claude models in Vertex AI:
-
-1. Navigate to the [Vertex AI Model Garden](https://console.cloud.google.com/vertex-ai/model-garden)
-2. Search for "Claude" models
-3. Request access to desired Claude models (e.g., Claude Sonnet 4)
-4. Wait for approval (may take 24-48 hours)
-
-### 3. Configure GCP credentials
-
-Claude Code uses standard Google Cloud authentication.
-
-For more information, see [Google Cloud authentication documentation](https://cloud.google.com/docs/authentication).
-
-### 4. Configure Claude Code
-
-Set the following environment variables:
-
-```bash
-# Enable Vertex AI integration
-export CLAUDE_CODE_USE_VERTEX=1
-export CLOUD_ML_REGION=us-east5
-export ANTHROPIC_VERTEX_PROJECT_ID=YOUR-PROJECT-ID
-
-# Optional: Disable prompt caching if needed
-export DISABLE_PROMPT_CACHING=1
-```
-
-<Note>
-  [Prompt caching](/en/docs/build-with-claude/prompt-caching) is automatically supported when you specify the `cache_control` ephemeral flag. To disable it, set `DISABLE_PROMPT_CACHING=1`. For heightened rate limits, contact Google Cloud support.
-</Note>
-
-### 5. Model configuration
-
-Claude Code uses these default models for Vertex AI:
-
-| Model type       | Default value               |
-| :--------------- | :-------------------------- |
-| Primary model    | `claude-sonnet-4@20250514`  |
-| Small/fast model | `claude-3-5-haiku@20241022` |
-
-To customize models:
-
-```bash
-export ANTHROPIC_MODEL='claude-opus-4@20250514'
-export ANTHROPIC_SMALL_FAST_MODEL='claude-3-5-haiku@20241022'
-```
-
-## IAM configuration
-
-Grant the required IAM roles for Claude Code.
-
-For details, see [Vertex IAM documentation](https://cloud.google.com/vertex-ai/docs/general/access-control).
-
-<Note>
-  We recommend creating a dedicated GCP project for Claude Code to simplify cost tracking and access control.
-</Note>
-
-## Troubleshooting
-
-If you encounter quota issues:
-
-- Check current quotas or request quota increase through [Cloud Console](https://cloud.google.com/docs/quotas/view-manage)
-
-If you encounter "model not found" 404 errors:
-
-- Verify you have access to the specified region
-- Confirm model is Enabled in [Model Garden](https://console.cloud.google.com/vertex-ai/model-garden)
-
-If you encounter 429 errors:
-
-- Ensure the primary model and small/fast model are supported in your selected region
-
-## Additional resources
-
-- [Vertex AI documentation](https://cloud.google.com/vertex-ai/docs)
-- [Vertex AI pricing](https://cloud.google.com/vertex-ai/pricing)
-- [Vertex AI quotas and limits](https://cloud.google.com/vertex-ai/docs/quotas)
-
-# Corporate proxy configuration
-
-> Learn how to configure Claude Code to work with corporate proxy servers, including environment variable configuration, authentication, and SSL/TLS certificate handling.
-
-Claude Code supports standard HTTP/HTTPS proxy configurations through environment variables. This allows you to route all Claude Code traffic through your organization's proxy servers for security, compliance, and monitoring purposes.
-
-## Basic proxy configuration
-
-### Environment variables
-
-Claude Code respects standard proxy environment variables:
-
-```bash
-# HTTPS proxy (recommended)
-export HTTPS_PROXY=https://proxy.example.com:8080
-
-# HTTP proxy (if HTTPS not available)
-export HTTP_PROXY=http://proxy.example.com:8080
-```
-
-<Note>
-  Claude Code currently does not support the `NO_PROXY` environment variable. All traffic will be routed through the configured proxy.
-</Note>
-
-<Note>
-  Claude Code does not support SOCKS proxies.
-</Note>
-
-## Authentication
-
-### Basic authentication
-
-If your proxy requires basic authentication, include credentials in the proxy URL:
-
-```bash
-export HTTPS_PROXY=http://username:password@proxy.example.com:8080
-```
-
-<Warning>
-  Avoid hardcoding passwords in scripts. Use environment variables or secure credential storage instead.
-</Warning>
+This command installs the appropriate build of Claude Code for your operating system and architecture and adds a symlink to the installation at `~/.local/bin/claude`.
 
 <Tip>
-  For proxies requiring advanced authentication (NTLM, Kerberos, etc.), consider using an LLM Gateway service that supports your authentication method.
+  Make sure that you have the installation directory in your system PATH.
 </Tip>
 
-### SSL certificate issues
+#### Alternative solution: Migrate to local installation
 
-If your proxy uses custom SSL certificates, you may encounter certificate errors.
-
-Ensure that you set the correct certificate bundle path:
+Alternatively, if Claude Code will run, you can migrate to a local installation:
 
 ```bash
-export SSL_CERT_FILE=/path/to/certificate-bundle.crt
-export NODE_EXTRA_CA_CERTS=/path/to/certificate-bundle.crt
+claude migrate-installer
 ```
 
-## Network access requirements
+This moves Claude Code to `~/.claude/local/` and sets up an alias in your shell configuration. No `sudo` is required for future updates.
 
-Claude Code requires access to the following URLs:
+After migration, restart your shell, and then verify your installation:
 
-- `api.anthropic.com` - Claude API endpoints
-- `statsig.anthropic.com` - Telemetry and metrics
-- `sentry.io` - Error reporting
+On macOS/Linux/WSL:
 
-Ensure these URLs are allowlisted in your proxy configuration and firewall rules. This is especially important when using Claude Code in containerized or restricted network environments.
+```bash
+which claude  # Should show an alias to ~/.claude/local/claude
+```
 
-## Additional resources
+On Windows:
 
-- [Claude Code settings](/en/docs/claude-code/settings)
-- [Environment variables reference](/en/docs/claude-code/settings#environment-variables)
-- [Troubleshooting guide](/en/docs/claude-code/troubleshooting)
+```powershell
+where claude  # Should show path to claude executable
+```
+
+Verify installation:
+
+```bash
+claude doctor # Check installation health
+```
+
+## Permissions and authentication
+
+### Repeated permission prompts
+
+If you find yourself repeatedly approving the same commands, you can allow specific tools
+to run without approval using the `/permissions` command. See [Permissions docs](/en/docs/claude-code/iam#configuring-permissions).
+
+### Authentication issues
+
+If you're experiencing authentication problems:
+
+1. Run `/logout` to sign out completely
+2. Close Claude Code
+3. Restart with `claude` and complete the authentication process again
+
+If problems persist, try:
+
+```bash
+rm -rf ~/.config/claude-code/auth.json
+claude
+```
+
+This removes your stored authentication information and forces a clean login.
+
+## Performance and stability
+
+### High CPU or memory usage
+
+Claude Code is designed to work with most development environments, but may consume significant resources when processing large codebases. If you're experiencing performance issues:
+
+1. Use `/compact` regularly to reduce context size
+2. Close and restart Claude Code between major tasks
+3. Consider adding large build directories to your `.gitignore` file
+
+### Command hangs or freezes
+
+If Claude Code seems unresponsive:
+
+1. Press Ctrl+C to attempt to cancel the current operation
+2. If unresponsive, you may need to close the terminal and restart
+
+### ESC key not working in JetBrains (IntelliJ, PyCharm, etc.) terminals
+
+If you're using Claude Code in JetBrains terminals and the ESC key doesn't interrupt the agent as expected, this is likely due to a keybinding clash with JetBrains' default shortcuts.
+
+To fix this issue:
+
+1. Go to Settings → Tools → Terminal
+2. Click the "Configure terminal keybindings" hyperlink next to "Override IDE Shortcuts"
+3. Within the terminal keybindings, scroll down to "Switch focus to Editor" and delete that shortcut
+
+This will allow the ESC key to properly function for canceling Claude Code operations instead of being captured by PyCharm's "Switch focus to Editor" action.
+
+## Getting more help
+
+If you're experiencing issues not covered here:
+
+1. Use the `/bug` command within Claude Code to report problems directly to Anthropic
+2. Check the [GitHub repository](https://github.com/anthropics/claude-code) for known issues
+3. Run `/doctor` to check the health of your Claude Code installation
+4. Ask Claude directly about its capabilities and features - Claude has built-in access to its documentation
+
+# Troubleshooting
+
+> Discover solutions to common issues with Claude Code installation and usage.
+
+## Common installation issues
+
+### Windows installation issues: errors in WSL
+
+You might encounter the following issues in WSL:
+
+**OS/platform detection issues**: If you receive an error during installation, WSL may be using Windows `npm`. Try:
+
+- Run `npm config set os linux` before installation
+- Install with `npm install -g @anthropic-ai/claude-code --force --no-os-check` (Do NOT use `sudo`)
+
+**Node not found errors**: If you see `exec: node: not found` when running `claude`, your WSL environment may be using a Windows installation of Node.js. You can confirm this with `which npm` and `which node`, which should point to Linux paths starting with `/usr/` rather than `/mnt/c/`. To fix this, try installing Node via your Linux distribution's package manager or via [`nvm`](https://github.com/nvm-sh/nvm).
+
+### Linux and Mac installation issues: permission or command not found errors
+
+When installing Claude Code with npm, `PATH` problems may prevent access to `claude`.
+You may also encounter permission errors if your npm global prefix is not user writable (eg. `/usr`, or `/usr/local`).
+
+#### Recommended solution: Native Claude Code installation
+
+Claude Code has a native installation that doesn't depend on npm or Node.js.
+
+<Note>
+  The native Claude Code installer is currently in beta.
+</Note>
+
+Use the following command to run the native installer.
+
+**macOS, Linux, WSL:**
+
+```bash
+# Install stable version (default)
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Install latest version
+curl -fsSL https://claude.ai/install.sh | bash -s latest
+
+# Install specific version number
+curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
+```
+
+**Windows PowerShell:**
+
+```powershell
+# Install stable version (default)
+irm https://claude.ai/install.ps1 | iex
+
+# Install latest version
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) latest
+
+# Install specific version number
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
+
+```
+
+This command installs the appropriate build of Claude Code for your operating system and architecture and adds a symlink to the installation at `~/.local/bin/claude`.
+
+<Tip>
+  Make sure that you have the installation directory in your system PATH.
+</Tip>
+
+#### Alternative solution: Migrate to local installation
+
+Alternatively, if Claude Code will run, you can migrate to a local installation:
+
+```bash
+claude migrate-installer
+```
+
+This moves Claude Code to `~/.claude/local/` and sets up an alias in your shell configuration. No `sudo` is required for future updates.
+
+After migration, restart your shell, and then verify your installation:
+
+On macOS/Linux/WSL:
+
+```bash
+which claude  # Should show an alias to ~/.claude/local/claude
+```
+
+On Windows:
+
+```powershell
+where claude  # Should show path to claude executable
+```
+
+Verify installation:
+
+```bash
+claude doctor # Check installation health
+```
+
+## Permissions and authentication
+
+### Repeated permission prompts
+
+If you find yourself repeatedly approving the same commands, you can allow specific tools
+to run without approval using the `/permissions` command. See [Permissions docs](/en/docs/claude-code/iam#configuring-permissions).
+
+### Authentication issues
+
+If you're experiencing authentication problems:
+
+1. Run `/logout` to sign out completely
+2. Close Claude Code
+3. Restart with `claude` and complete the authentication process again
+
+If problems persist, try:
+
+```bash
+rm -rf ~/.config/claude-code/auth.json
+claude
+```
+
+This removes your stored authentication information and forces a clean login.
+
+## Performance and stability
+
+### High CPU or memory usage
+
+Claude Code is designed to work with most development environments, but may consume significant resources when processing large codebases. If you're experiencing performance issues:
+
+1. Use `/compact` regularly to reduce context size
+2. Close and restart Claude Code between major tasks
+3. Consider adding large build directories to your `.gitignore` file
+
+### Command hangs or freezes
+
+If Claude Code seems unresponsive:
+
+1. Press Ctrl+C to attempt to cancel the current operation
+2. If unresponsive, you may need to close the terminal and restart
+
+### ESC key not working in JetBrains (IntelliJ, PyCharm, etc.) terminals
+
+If you're using Claude Code in JetBrains terminals and the ESC key doesn't interrupt the agent as expected, this is likely due to a keybinding clash with JetBrains' default shortcuts.
+
+To fix this issue:
+
+1. Go to Settings → Tools → Terminal
+2. Click the "Configure terminal keybindings" hyperlink next to "Override IDE Shortcuts"
+3. Within the terminal keybindings, scroll down to "Switch focus to Editor" and delete that shortcut
+
+This will allow the ESC key to properly function for canceling Claude Code operations instead of being captured by PyCharm's "Switch focus to Editor" action.
+
+## Getting more help
+
+If you're experiencing issues not covered here:
+
+1. Use the `/bug` command within Claude Code to report problems directly to Anthropic
+2. Check the [GitHub repository](https://github.com/anthropics/claude-code) for known issues
+3. Run `/doctor` to check the health of your Claude Code installation
+4. Ask Claude directly about its capabilities and features - Claude has built-in access to its documentation
+
+# Troubleshooting
+
+> Discover solutions to common issues with Claude Code installation and usage.
+
+## Common installation issues
+
+### Windows installation issues: errors in WSL
+
+You might encounter the following issues in WSL:
+
+**OS/platform detection issues**: If you receive an error during installation, WSL may be using Windows `npm`. Try:
+
+- Run `npm config set os linux` before installation
+- Install with `npm install -g @anthropic-ai/claude-code --force --no-os-check` (Do NOT use `sudo`)
+
+**Node not found errors**: If you see `exec: node: not found` when running `claude`, your WSL environment may be using a Windows installation of Node.js. You can confirm this with `which npm` and `which node`, which should point to Linux paths starting with `/usr/` rather than `/mnt/c/`. To fix this, try installing Node via your Linux distribution's package manager or via [`nvm`](https://github.com/nvm-sh/nvm).
+
+### Linux and Mac installation issues: permission or command not found errors
+
+When installing Claude Code with npm, `PATH` problems may prevent access to `claude`.
+You may also encounter permission errors if your npm global prefix is not user writable (eg. `/usr`, or `/usr/local`).
+
+#### Recommended solution: Native Claude Code installation
+
+Claude Code has a native installation that doesn't depend on npm or Node.js.
+
+<Note>
+  The native Claude Code installer is currently in beta.
+</Note>
+
+Use the following command to run the native installer.
+
+**macOS, Linux, WSL:**
+
+```bash
+# Install stable version (default)
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Install latest version
+curl -fsSL https://claude.ai/install.sh | bash -s latest
+
+# Install specific version number
+curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
+```
+
+**Windows PowerShell:**
+
+```powershell
+# Install stable version (default)
+irm https://claude.ai/install.ps1 | iex
+
+# Install latest version
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) latest
+
+# Install specific version number
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
+
+```
+
+This command installs the appropriate build of Claude Code for your operating system and architecture and adds a symlink to the installation at `~/.local/bin/claude`.
+
+<Tip>
+  Make sure that you have the installation directory in your system PATH.
+</Tip>
+
+#### Alternative solution: Migrate to local installation
+
+Alternatively, if Claude Code will run, you can migrate to a local installation:
+
+```bash
+claude migrate-installer
+```
+
+This moves Claude Code to `~/.claude/local/` and sets up an alias in your shell configuration. No `sudo` is required for future updates.
+
+After migration, restart your shell, and then verify your installation:
+
+On macOS/Linux/WSL:
+
+```bash
+which claude  # Should show an alias to ~/.claude/local/claude
+```
+
+On Windows:
+
+```powershell
+where claude  # Should show path to claude executable
+```
+
+Verify installation:
+
+```bash
+claude doctor # Check installation health
+```
+
+## Permissions and authentication
+
+### Repeated permission prompts
+
+If you find yourself repeatedly approving the same commands, you can allow specific tools
+to run without approval using the `/permissions` command. See [Permissions docs](/en/docs/claude-code/iam#configuring-permissions).
+
+### Authentication issues
+
+If you're experiencing authentication problems:
+
+1. Run `/logout` to sign out completely
+2. Close Claude Code
+3. Restart with `claude` and complete the authentication process again
+
+If problems persist, try:
+
+```bash
+rm -rf ~/.config/claude-code/auth.json
+claude
+```
+
+This removes your stored authentication information and forces a clean login.
+
+## Performance and stability
+
+### High CPU or memory usage
+
+Claude Code is designed to work with most development environments, but may consume significant resources when processing large codebases. If you're experiencing performance issues:
+
+1. Use `/compact` regularly to reduce context size
+2. Close and restart Claude Code between major tasks
+3. Consider adding large build directories to your `.gitignore` file
+
+### Command hangs or freezes
+
+If Claude Code seems unresponsive:
+
+1. Press Ctrl+C to attempt to cancel the current operation
+2. If unresponsive, you may need to close the terminal and restart
+
+### ESC key not working in JetBrains (IntelliJ, PyCharm, etc.) terminals
+
+If you're using Claude Code in JetBrains terminals and the ESC key doesn't interrupt the agent as expected, this is likely due to a keybinding clash with JetBrains' default shortcuts.
+
+To fix this issue:
+
+1. Go to Settings → Tools → Terminal
+2. Click the "Configure terminal keybindings" hyperlink next to "Override IDE Shortcuts"
+3. Within the terminal keybindings, scroll down to "Switch focus to Editor" and delete that shortcut
+
+This will allow the ESC key to properly function for canceling Claude Code operations instead of being captured by PyCharm's "Switch focus to Editor" action.
+
+## Getting more help
+
+If you're experiencing issues not covered here:
+
+1. Use the `/bug` command within Claude Code to report problems directly to Anthropic
+2. Check the [GitHub repository](https://github.com/anthropics/claude-code) for known issues
+3. Run `/doctor` to check the health of your Claude Code installation
+4. Ask Claude directly about its capabilities and features - Claude has built-in access to its documentation
+
+# Troubleshooting
+
+> Discover solutions to common issues with Claude Code installation and usage.
+
+## Common installation issues
+
+### Windows installation issues: errors in WSL
+
+You might encounter the following issues in WSL:
+
+**OS/platform detection issues**: If you receive an error during installation, WSL may be using Windows `npm`. Try:
+
+- Run `npm config set os linux` before installation
+- Install with `npm install -g @anthropic-ai/claude-code --force --no-os-check` (Do NOT use `sudo`)
+
+**Node not found errors**: If you see `exec: node: not found` when running `claude`, your WSL environment may be using a Windows installation of Node.js. You can confirm this with `which npm` and `which node`, which should point to Linux paths starting with `/usr/` rather than `/mnt/c/`. To fix this, try installing Node via your Linux distribution's package manager or via [`nvm`](https://github.com/nvm-sh/nvm).
+
+### Linux and Mac installation issues: permission or command not found errors
+
+When installing Claude Code with npm, `PATH` problems may prevent access to `claude`.
+You may also encounter permission errors if your npm global prefix is not user writable (eg. `/usr`, or `/usr/local`).
+
+#### Recommended solution: Native Claude Code installation
+
+Claude Code has a native installation that doesn't depend on npm or Node.js.
+
+<Note>
+  The native Claude Code installer is currently in beta.
+</Note>
+
+Use the following command to run the native installer.
+
+**macOS, Linux, WSL:**
+
+```bash
+# Install stable version (default)
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Install latest version
+curl -fsSL https://claude.ai/install.sh | bash -s latest
+
+# Install specific version number
+curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
+```
+
+**Windows PowerShell:**
+
+```powershell
+# Install stable version (default)
+irm https://claude.ai/install.ps1 | iex
+
+# Install latest version
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) latest
+
+# Install specific version number
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
+
+```
+
+This command installs the appropriate build of Claude Code for your operating system and architecture and adds a symlink to the installation at `~/.local/bin/claude`.
+
+<Tip>
+  Make sure that you have the installation directory in your system PATH.
+</Tip>
+
+#### Alternative solution: Migrate to local installation
+
+Alternatively, if Claude Code will run, you can migrate to a local installation:
+
+```bash
+claude migrate-installer
+```
+
+This moves Claude Code to `~/.claude/local/` and sets up an alias in your shell configuration. No `sudo` is required for future updates.
+
+After migration, restart your shell, and then verify your installation:
+
+On macOS/Linux/WSL:
+
+```bash
+which claude  # Should show an alias to ~/.claude/local/claude
+```
+
+On Windows:
+
+```powershell
+where claude  # Should show path to claude executable
+```
+
+Verify installation:
+
+```bash
+claude doctor # Check installation health
+```
+
+## Permissions and authentication
+
+### Repeated permission prompts
+
+If you find yourself repeatedly approving the same commands, you can allow specific tools
+to run without approval using the `/permissions` command. See [Permissions docs](/en/docs/claude-code/iam#configuring-permissions).
+
+### Authentication issues
+
+If you're experiencing authentication problems:
+
+1. Run `/logout` to sign out completely
+2. Close Claude Code
+3. Restart with `claude` and complete the authentication process again
+
+If problems persist, try:
+
+```bash
+rm -rf ~/.config/claude-code/auth.json
+claude
+```
+
+This removes your stored authentication information and forces a clean login.
+
+## Performance and stability
+
+### High CPU or memory usage
+
+Claude Code is designed to work with most development environments, but may consume significant resources when processing large codebases. If you're experiencing performance issues:
+
+1. Use `/compact` regularly to reduce context size
+2. Close and restart Claude Code between major tasks
+3. Consider adding large build directories to your `.gitignore` file
+
+### Command hangs or freezes
+
+If Claude Code seems unresponsive:
+
+1. Press Ctrl+C to attempt to cancel the current operation
+2. If unresponsive, you may need to close the terminal and restart
+
+### ESC key not working in JetBrains (IntelliJ, PyCharm, etc.) terminals
+
+If you're using Claude Code in JetBrains terminals and the ESC key doesn't interrupt the agent as expected, this is likely due to a keybinding clash with JetBrains' default shortcuts.
+
+To fix this issue:
+
+1. Go to Settings → Tools → Terminal
+2. Click the "Configure terminal keybindings" hyperlink next to "Override IDE Shortcuts"
+3. Within the terminal keybindings, scroll down to "Switch focus to Editor" and delete that shortcut
+
+This will allow the ESC key to properly function for canceling Claude Code operations instead of being captured by PyCharm's "Switch focus to Editor" action.
+
+## Getting more help
+
+If you're experiencing issues not covered here:
+
+1. Use the `/bug` command within Claude Code to report problems directly to Anthropic
+2. Check the [GitHub repository](https://github.com/anthropics/claude-code) for known issues
+3. Run `/doctor` to check the health of your Claude Code installation
+4. Ask Claude directly about its capabilities and features - Claude has built-in access to its documentation
 
 # LLM gateway configuration
 
@@ -551,7 +672,7 @@ export ANTHROPIC_AUTH_TOKEN=sk-litellm-static-key
 }
 ```
 
-This value will be sent as the `Authorization` and `Proxy-Authorization` headers, although `Authorization` may be overwritten (see Vertex "Client-specified credentials" below).
+This value will be sent as the `Authorization` header.
 
 ##### Dynamic API key with helper
 
@@ -588,7 +709,7 @@ jwt encode \
 export CLAUDE_CODE_API_KEY_HELPER_TTL_MS=3600000
 ```
 
-This value will be sent as `Authorization`, `Proxy-Authorization`, and `X-Api-Key` headers, although `Authorization` may be overwritten (see [Google Vertex AI through LiteLLM](#google-vertex-ai-through-litellm)). The `apiKeyHelper` has lower precedence than `ANTHROPIC_AUTH_TOKEN` or `ANTHROPIC_API_KEY`.
+This value will be sent as `Authorization` and `X-Api-Key` headers. The `apiKeyHelper` has lower precedence than `ANTHROPIC_AUTH_TOKEN` or `ANTHROPIC_API_KEY`.
 
 #### Unified endpoint (recommended)
 
@@ -628,8 +749,6 @@ export CLAUDE_CODE_USE_BEDROCK=1
 
 Using [pass-through endpoint](https://docs.litellm.ai/docs/pass_through/vertex_ai):
 
-**Recommended: Proxy-specified credentials**
-
 ```bash
 export ANTHROPIC_VERTEX_BASE_URL=https://litellm-server:4000/vertex_ai/v1
 export ANTHROPIC_VERTEX_PROJECT_ID=your-gcp-project-id
@@ -637,29 +756,6 @@ export CLAUDE_CODE_SKIP_VERTEX_AUTH=1
 export CLAUDE_CODE_USE_VERTEX=1
 export CLOUD_ML_REGION=us-east5
 ```
-
-**Alternative: Client-specified credentials**
-
-If you prefer to use local GCP credentials:
-
-1. Authenticate with GCP locally:
-
-```bash
-gcloud auth application-default login
-```
-
-2. Set Claude Code environment:
-
-```bash
-export ANTHROPIC_VERTEX_BASE_URL=https://litellm-server:4000/vertex_ai/v1
-export ANTHROPIC_VERTEX_PROJECT_ID=your-gcp-project-id
-export CLAUDE_CODE_USE_VERTEX=1
-export CLOUD_ML_REGION=us-east5
-```
-
-3. Update LiteLLM header configuration:
-
-Ensure your LiteLLM config has `general_settings.litellm_key_header_name` set to `Proxy-Authorization`, since the pass-through GCP token will be located on the `Authorization` header.
 
 ### Model selection
 
@@ -676,78 +772,479 @@ For more detailed information, refer to the [LiteLLM documentation](https://docs
 - [Corporate proxy setup](/en/docs/claude-code/corporate-proxy)
 - [Third-party integrations overview](/en/docs/claude-code/third-party-integrations)
 
-# Development containers
+# Monitoring
 
-> Learn about the Claude Code development container for teams that need consistent, secure environments.
+> Learn how to enable and configure OpenTelemetry for Claude Code.
 
-The preconfigured [devcontainer setup](https://code.visualstudio.com/docs/devcontainers/containers) works seamlessly with VS Code's Remote - Containers extension and similar tools.
+Claude Code supports OpenTelemetry (OTel) metrics and events for monitoring and observability.
 
-The container's enhanced security measures (isolation and firewall rules) allow you to run `claude --dangerously-skip-permissions` to bypass permission prompts for unattended operation. We've included a [reference implementation](https://github.com/anthropics/claude-code/tree/main/.devcontainer) that you can customize for your needs.
+All metrics are time series data exported via OpenTelemetry's standard metrics protocol, and events are exported via OpenTelemetry's logs/events protocol. It is the user's responsibility to ensure their metrics and logs backends are properly configured and that the aggregation granularity meets their monitoring requirements.
 
-<Warning>
-  While the devcontainer provides substantial protections, no system is
-  completely immune to all attacks. Always maintain good security practices and
-  monitor Claude's activities.
-</Warning>
+<Note>
+  OpenTelemetry support is currently in beta and details are subject to change.
+</Note>
 
-## Key features
+## Quick Start
 
-- **Production-ready Node.js**: Built on Node.js 20 with essential development dependencies
-- **Security by design**: Custom firewall restricting network access to only necessary services
-- **Developer-friendly tools**: Includes git, ZSH with productivity enhancements, fzf, and more
-- **Seamless VS Code integration**: Pre-configured extensions and optimized settings
-- **Session persistence**: Preserves command history and configurations between container restarts
-- **Works everywhere**: Compatible with macOS, Windows, and Linux development environments
+Configure OpenTelemetry using environment variables:
 
-## Getting started in 4 steps
+```bash
+# 1. Enable telemetry
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
 
-1. Install VS Code and the Remote - Containers extension
-2. Clone the [Claude Code reference implementation](https://github.com/anthropics/claude-code/tree/main/.devcontainer) repository
-3. Open the repository in VS Code
-4. When prompted, click "Reopen in Container" (or use Command Palette: Cmd+Shift+P → "Remote-Containers: Reopen in Container")
+# 2. Choose exporters (both are optional - configure only what you need)
+export OTEL_METRICS_EXPORTER=otlp       # Options: otlp, prometheus, console
+export OTEL_LOGS_EXPORTER=otlp          # Options: otlp, console
 
-## Configuration breakdown
+# 3. Configure OTLP endpoint (for OTLP exporter)
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 
-The devcontainer setup consists of three primary components:
+# 4. Set authentication (if required)
+export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer your-token"
 
-- [**devcontainer.json**](https://github.com/anthropics/claude-code/blob/main/.devcontainer/devcontainer.json): Controls container settings, extensions, and volume mounts
-- [**Dockerfile**](https://github.com/anthropics/claude-code/blob/main/.devcontainer/Dockerfile): Defines the container image and installed tools
-- [**init-firewall.sh**](https://github.com/anthropics/claude-code/blob/main/.devcontainer/init-firewall.sh): Establishes network security rules
+# 5. For debugging: reduce export intervals
+export OTEL_METRIC_EXPORT_INTERVAL=10000  # 10 seconds (default: 60000ms)
+export OTEL_LOGS_EXPORT_INTERVAL=5000     # 5 seconds (default: 5000ms)
 
-## Security features
+# 6. Run Claude Code
+claude
+```
 
-The container implements a multi-layered security approach with its firewall configuration:
+<Note>
+  The default export intervals are 60 seconds for metrics and 5 seconds for logs. During setup, you may want to use shorter intervals for debugging purposes. Remember to reset these for production use.
+</Note>
 
-- **Precise access control**: Restricts outbound connections to whitelisted domains only (npm registry, GitHub, Anthropic API, etc.)
-- **Default-deny policy**: Blocks all other external network access
-- **Startup verification**: Validates firewall rules when the container initializes
-- **Isolation**: Creates a secure development environment separated from your main system
+For full configuration options, see the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options).
 
-## Customization options
+## Administrator Configuration
 
-The devcontainer configuration is designed to be adaptable to your needs:
+Administrators can configure OpenTelemetry settings for all users through the managed settings file. This allows for centralized control of telemetry settings across an organization. See the [settings precedence](/en/docs/claude-code/settings#settings-precedence) for more information about how settings are applied.
 
-- Add or remove VS Code extensions based on your workflow
-- Modify resource allocations for different hardware environments
-- Adjust network access permissions
-- Customize shell configurations and developer tooling
+The managed settings file is located at:
 
-## Example use cases
+- macOS: `/Library/Application Support/ClaudeCode/managed-settings.json`
+- Linux and WSL: `/etc/claude-code/managed-settings.json`
+- Windows: `C:\ProgramData\ClaudeCode\managed-settings.json`
 
-### Secure client work
+Example managed settings configuration:
 
-Use devcontainers to isolate different client projects, ensuring code and credentials never mix between environments.
+```json
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://collector.company.com:4317",
+    "OTEL_EXPORTER_OTLP_HEADERS": "Authorization=Bearer company-token"
+  }
+}
+```
 
-### Team onboarding
+<Note>
+  Managed settings can be distributed via MDM (Mobile Device Management) or other device management solutions. Environment variables defined in the managed settings file have high precedence and cannot be overridden by users.
+</Note>
 
-New team members can get a fully configured development environment in minutes, with all necessary tools and settings pre-installed.
+## Configuration Details
 
-### Consistent CI/CD environments
+### Common Configuration Variables
 
-Mirror your devcontainer configuration in CI/CD pipelines to ensure development and production environments match.
+| Environment Variable                            | Description                                               | Example Values                       |
+| ----------------------------------------------- | --------------------------------------------------------- | ------------------------------------ |
+| `CLAUDE_CODE_ENABLE_TELEMETRY`                  | Enables telemetry collection (required)                   | `1`                                  |
+| `OTEL_METRICS_EXPORTER`                         | Metrics exporter type(s) (comma-separated)                | `console`, `otlp`, `prometheus`      |
+| `OTEL_LOGS_EXPORTER`                            | Logs/events exporter type(s) (comma-separated)            | `console`, `otlp`                    |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`                   | Protocol for OTLP exporter (all signals)                  | `grpc`, `http/json`, `http/protobuf` |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`                   | OTLP collector endpoint (all signals)                     | `http://localhost:4317`              |
+| `OTEL_EXPORTER_OTLP_METRICS_PROTOCOL`           | Protocol for metrics (overrides general)                  | `grpc`, `http/json`, `http/protobuf` |
+| `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`           | OTLP metrics endpoint (overrides general)                 | `http://localhost:4318/v1/metrics`   |
+| `OTEL_EXPORTER_OTLP_LOGS_PROTOCOL`              | Protocol for logs (overrides general)                     | `grpc`, `http/json`, `http/protobuf` |
+| `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT`              | OTLP logs endpoint (overrides general)                    | `http://localhost:4318/v1/logs`      |
+| `OTEL_EXPORTER_OTLP_HEADERS`                    | Authentication headers for OTLP                           | `Authorization=Bearer token`         |
+| `OTEL_EXPORTER_OTLP_METRICS_CLIENT_KEY`         | Client key for mTLS authentication                        | Path to client key file              |
+| `OTEL_EXPORTER_OTLP_METRICS_CLIENT_CERTIFICATE` | Client certificate for mTLS authentication                | Path to client cert file             |
+| `OTEL_METRIC_EXPORT_INTERVAL`                   | Export interval in milliseconds (default: 60000)          | `5000`, `60000`                      |
+| `OTEL_LOGS_EXPORT_INTERVAL`                     | Logs export interval in milliseconds (default: 5000)      | `1000`, `10000`                      |
+| `OTEL_LOG_USER_PROMPTS`                         | Enable logging of user prompt content (default: disabled) | `1` to enable                        |
 
-## Related resources
+### Metrics Cardinality Control
 
-- [VS Code devcontainers documentation](https://code.visualstudio.com/docs/devcontainers/containers)
-- [Claude Code security best practices](/en/docs/claude-code/security)
-- [Corporate proxy configuration](/en/docs/claude-code/corporate-proxy)
+The following environment variables control which attributes are included in metrics to manage cardinality:
+
+| Environment Variable                | Description                                    | Default Value | Example to Disable |
+| ----------------------------------- | ---------------------------------------------- | ------------- | ------------------ |
+| `OTEL_METRICS_INCLUDE_SESSION_ID`   | Include session.id attribute in metrics        | `true`        | `false`            |
+| `OTEL_METRICS_INCLUDE_VERSION`      | Include app.version attribute in metrics       | `false`       | `true`             |
+| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | Include user.account_uuid attribute in metrics | `true`        | `false`            |
+
+These variables help control the cardinality of metrics, which affects storage requirements and query performance in your metrics backend. Lower cardinality generally means better performance and lower storage costs but less granular data for analysis.
+
+### Dynamic Headers
+
+For enterprise environments that require dynamic authentication, you can configure a script to generate headers dynamically:
+
+#### Settings Configuration
+
+Add to your `.claude/settings.json`:
+
+```json
+{
+  "otelHeadersHelper": "/bin/generate_opentelemetry_headers.sh"
+}
+```
+
+#### Script Requirements
+
+The script must output valid JSON with string key-value pairs representing HTTP headers:
+
+```bash
+#!/bin/bash
+# Example: Multiple headers
+echo "{\"Authorization\": \"Bearer $(get-token.sh)\", \"X-API-Key\": \"$(get-api-key.sh)\"}"
+```
+
+#### Important Limitations
+
+**Headers are fetched only at startup, not during runtime.** This is due to OpenTelemetry exporter architecture limitations.
+
+For scenarios requiring frequent token refresh, use an OpenTelemetry Collector as a proxy that can refresh its own headers.
+
+### Multi-Team Organization Support
+
+Organizations with multiple teams or departments can add custom attributes to distinguish between different groups using the `OTEL_RESOURCE_ATTRIBUTES` environment variable:
+
+```bash
+# Add custom attributes for team identification
+export OTEL_RESOURCE_ATTRIBUTES="department=engineering,team.id=platform,cost_center=eng-123"
+```
+
+These custom attributes will be included in all metrics and events, allowing you to:
+
+- Filter metrics by team or department
+- Track costs per cost center
+- Create team-specific dashboards
+- Set up alerts for specific teams
+
+### Example Configurations
+
+```bash
+# Console debugging (1-second intervals)
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=console
+export OTEL_METRIC_EXPORT_INTERVAL=1000
+
+# OTLP/gRPC
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+
+# Prometheus
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=prometheus
+
+# Multiple exporters
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=console,otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=http/json
+
+# Different endpoints/backends for metrics and logs
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_LOGS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=http/protobuf
+export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=http://metrics.company.com:4318
+export OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://logs.company.com:4317
+
+# Metrics only (no events/logs)
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+
+# Events/logs only (no metrics)
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_LOGS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+
+## Available Metrics and Events
+
+### Standard Attributes
+
+All metrics and events share these standard attributes:
+
+| Attribute           | Description                                                   | Controlled By                                       |
+| ------------------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| `session.id`        | Unique session identifier                                     | `OTEL_METRICS_INCLUDE_SESSION_ID` (default: true)   |
+| `app.version`       | Current Claude Code version                                   | `OTEL_METRICS_INCLUDE_VERSION` (default: false)     |
+| `organization.id`   | Organization UUID (when authenticated)                        | Always included when available                      |
+| `user.account_uuid` | Account UUID (when authenticated)                             | `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` (default: true) |
+| `terminal.type`     | Terminal type (e.g., `iTerm.app`, `vscode`, `cursor`, `tmux`) | Always included when detected                       |
+
+### Metrics
+
+Claude Code exports the following metrics:
+
+| Metric Name                           | Description                                     | Unit   |
+| ------------------------------------- | ----------------------------------------------- | ------ |
+| `claude_code.session.count`           | Count of CLI sessions started                   | count  |
+| `claude_code.lines_of_code.count`     | Count of lines of code modified                 | count  |
+| `claude_code.pull_request.count`      | Number of pull requests created                 | count  |
+| `claude_code.commit.count`            | Number of git commits created                   | count  |
+| `claude_code.cost.usage`              | Cost of the Claude Code session                 | USD    |
+| `claude_code.token.usage`             | Number of tokens used                           | tokens |
+| `claude_code.code_edit_tool.decision` | Count of code editing tool permission decisions | count  |
+| `claude_code.active_time.total`       | Total active time in seconds                    | s      |
+
+### Metric Details
+
+#### Session Counter
+
+Incremented at the start of each session.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+
+#### Lines of Code Counter
+
+Incremented when code is added or removed.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `type`: (`"added"`, `"removed"`)
+
+#### Pull Request Counter
+
+Incremented when creating pull requests via Claude Code.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+
+#### Commit Counter
+
+Incremented when creating git commits via Claude Code.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+
+#### Cost Counter
+
+Incremented after each API request.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `model`: Model identifier (e.g., "claude-3-5-sonnet-20241022")
+
+#### Token Counter
+
+Incremented after each API request.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `type`: (`"input"`, `"output"`, `"cacheRead"`, `"cacheCreation"`)
+- `model`: Model identifier (e.g., "claude-3-5-sonnet-20241022")
+
+#### Code Edit Tool Decision Counter
+
+Incremented when user accepts or rejects Edit, MultiEdit, Write, or NotebookEdit tool usage.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `tool`: Tool name (`"Edit"`, `"MultiEdit"`, `"Write"`, `"NotebookEdit"`)
+- `decision`: User decision (`"accept"`, `"reject"`)
+- `language`: Programming language of the edited file (e.g., `"TypeScript"`, `"Python"`, `"JavaScript"`, `"Markdown"`). Returns `"unknown"` for unrecognized file extensions.
+
+#### Active Time Counter
+
+Tracks actual time spent actively using Claude Code (not idle time). This metric is incremented during user interactions such as typing prompts or receiving responses.
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+
+### Events
+
+Claude Code exports the following events via OpenTelemetry logs/events (when `OTEL_LOGS_EXPORTER` is configured):
+
+#### User Prompt Event
+
+Logged when a user submits a prompt.
+
+**Event Name**: `claude_code.user_prompt`
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `event.name`: `"user_prompt"`
+- `event.timestamp`: ISO 8601 timestamp
+- `prompt_length`: Length of the prompt
+- `prompt`: Prompt content (redacted by default, enable with `OTEL_LOG_USER_PROMPTS=1`)
+
+#### Tool Result Event
+
+Logged when a tool completes execution.
+
+**Event Name**: `claude_code.tool_result`
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `event.name`: `"tool_result"`
+- `event.timestamp`: ISO 8601 timestamp
+- `tool_name`: Name of the tool
+- `success`: `"true"` or `"false"`
+- `duration_ms`: Execution time in milliseconds
+- `error`: Error message (if failed)
+- `decision`: Either `"accept"` or `"reject"`
+- `source`: Decision source - `"config"`, `"user_permanent"`, `"user_temporary"`, `"user_abort"`, or `"user_reject"`
+- `tool_parameters`: JSON string containing tool-specific parameters (when available)
+  - For Bash tool: includes `bash_command`, `full_command`, `timeout`, `description`, `sandbox`
+
+#### API Request Event
+
+Logged for each API request to Claude.
+
+**Event Name**: `claude_code.api_request`
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `event.name`: `"api_request"`
+- `event.timestamp`: ISO 8601 timestamp
+- `model`: Model used (e.g., "claude-3-5-sonnet-20241022")
+- `cost_usd`: Estimated cost in USD
+- `duration_ms`: Request duration in milliseconds
+- `input_tokens`: Number of input tokens
+- `output_tokens`: Number of output tokens
+- `cache_read_tokens`: Number of tokens read from cache
+- `cache_creation_tokens`: Number of tokens used for cache creation
+
+#### API Error Event
+
+Logged when an API request to Claude fails.
+
+**Event Name**: `claude_code.api_error`
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `event.name`: `"api_error"`
+- `event.timestamp`: ISO 8601 timestamp
+- `model`: Model used (e.g., "claude-3-5-sonnet-20241022")
+- `error`: Error message
+- `status_code`: HTTP status code (if applicable)
+- `duration_ms`: Request duration in milliseconds
+- `attempt`: Attempt number (for retried requests)
+
+#### Tool Decision Event
+
+Logged when a tool permission decision is made (accept/reject).
+
+**Event Name**: `claude_code.tool_decision`
+
+**Attributes**:
+
+- All [standard attributes](#standard-attributes)
+- `event.name`: `"tool_decision"`
+- `event.timestamp`: ISO 8601 timestamp
+- `tool_name`: Name of the tool (e.g., "Read", "Edit", "MultiEdit", "Write", "NotebookEdit", etc.)
+- `decision`: Either `"accept"` or `"reject"`
+- `source`: Decision source - `"config"`, `"user_permanent"`, `"user_temporary"`, `"user_abort"`, or `"user_reject"`
+
+## Interpreting Metrics and Events Data
+
+The metrics exported by Claude Code provide valuable insights into usage patterns and productivity. Here are some common visualizations and analyses you can create:
+
+### Usage Monitoring
+
+| Metric                                                        | Analysis Opportunity                                      |
+| ------------------------------------------------------------- | --------------------------------------------------------- |
+| `claude_code.token.usage`                                     | Break down by `type` (input/output), user, team, or model |
+| `claude_code.session.count`                                   | Track adoption and engagement over time                   |
+| `claude_code.lines_of_code.count`                             | Measure productivity by tracking code additions/removals  |
+| `claude_code.commit.count` & `claude_code.pull_request.count` | Understand impact on development workflows                |
+
+### Cost Monitoring
+
+The `claude_code.cost.usage` metric helps with:
+
+- Tracking usage trends across teams or individuals
+- Identifying high-usage sessions for optimization
+
+<Note>
+  Cost metrics are approximations. For official billing data, refer to your API provider (Anthropic Console, AWS Bedrock, or Google Cloud Vertex).
+</Note>
+
+### Alerting and Segmentation
+
+Common alerts to consider:
+
+- Cost spikes
+- Unusual token consumption
+- High session volume from specific users
+
+All metrics can be segmented by `user.account_uuid`, `organization.id`, `session.id`, `model`, and `app.version`.
+
+### Event Analysis
+
+The event data provides detailed insights into Claude Code interactions:
+
+**Tool Usage Patterns**: Analyze tool result events to identify:
+
+- Most frequently used tools
+- Tool success rates
+- Average tool execution times
+- Error patterns by tool type
+
+**Performance Monitoring**: Track API request durations and tool execution times to identify performance bottlenecks.
+
+## Backend Considerations
+
+Your choice of metrics and logs backends will determine the types of analyses you can perform:
+
+### For Metrics:
+
+- **Time series databases (e.g., Prometheus)**: Rate calculations, aggregated metrics
+- **Columnar stores (e.g., ClickHouse)**: Complex queries, unique user analysis
+- **Full-featured observability platforms (e.g., Honeycomb, Datadog)**: Advanced querying, visualization, alerting
+
+### For Events/Logs:
+
+- **Log aggregation systems (e.g., Elasticsearch, Loki)**: Full-text search, log analysis
+- **Columnar stores (e.g., ClickHouse)**: Structured event analysis
+- **Full-featured observability platforms (e.g., Honeycomb, Datadog)**: Correlation between metrics and events
+
+For organizations requiring Daily/Weekly/Monthly Active User (DAU/WAU/MAU) metrics, consider backends that support efficient unique value queries.
+
+## Service Information
+
+All metrics and events are exported with the following resource attributes:
+
+- `service.name`: `claude-code`
+- `service.version`: Current Claude Code version
+- `os.type`: Operating system type (e.g., `linux`, `darwin`, `windows`)
+- `os.version`: Operating system version string
+- `host.arch`: Host architecture (e.g., `amd64`, `arm64`)
+- `wsl.version`: WSL version number (only present when running on Windows Subsystem for Linux)
+- Meter Name: `com.anthropic.claude_code`
+
+## ROI Measurement Resources
+
+For a comprehensive guide on measuring return on investment for Claude Code, including telemetry setup, cost analysis, productivity metrics, and automated reporting, see the [Claude Code ROI Measurement Guide](https://github.com/anthropics/claude-code-monitoring-guide). This repository provides ready-to-use Docker Compose configurations, Prometheus and OpenTelemetry setups, and templates for generating productivity reports integrated with tools like Linear.
+
+## Security/Privacy Considerations
+
+- Telemetry is opt-in and requires explicit configuration
+- Sensitive information like API keys or file contents are never included in metrics or events
+- User prompt content is redacted by default - only prompt length is recorded. To enable user prompt logging, set `OTEL_LOG_USER_PROMPTS=1`

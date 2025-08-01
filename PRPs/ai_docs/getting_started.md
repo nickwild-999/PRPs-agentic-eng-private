@@ -1,3 +1,385 @@
+# Claude Code overview
+
+> Learn about Claude Code, Anthropic's agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.
+
+## Get started in 30 seconds
+
+Prerequisites: [Node.js 18 or newer](https://nodejs.org/en/download/)
+
+```bash
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Navigate to your project
+cd your-awesome-project
+
+# Start coding with Claude
+claude
+```
+
+That's it! You're ready to start coding with Claude. [Continue with Quickstart (5 mins) →](/en/docs/claude-code/quickstart)
+
+(Got specific setup needs or hit issues? See [advanced setup](/en/docs/claude-code/setup) or [troubleshooting](/en/docs/claude-code/troubleshooting).)
+
+## What Claude Code does for you
+
+- **Build features from descriptions**: Tell Claude what you want to build in plain English. It will make a plan, write the code, and ensure it works.
+- **Debug and fix issues**: Describe a bug or paste an error message. Claude Code will analyze your codebase, identify the problem, and implement a fix.
+- **Navigate any codebase**: Ask anything about your team's codebase, and get a thoughtful answer back. Claude Code maintains awareness of your entire project structure, can find up-to-date information from the web, and with [MCP](/en/docs/claude-code/mcp) can pull from external datasources like Google Drive, Figma, and Slack.
+- **Automate tedious tasks**: Fix fiddly lint issues, resolve merge conflicts, and write release notes. Do all this in a single command from your developer machines, or automatically in CI.
+
+## Why developers love Claude Code
+
+- **Works in your terminal**: Not another chat window. Not another IDE. Claude Code meets you where you already work, with the tools you already love.
+- **Takes action**: Claude Code can directly edit files, run commands, and create commits. Need more? [MCP](/en/docs/claude-code/mcp) lets Claude read your design docs in Google Drive, update your tickets in Jira, or use _your_ custom developer tooling.
+- **Unix philosophy**: Claude Code is composable and scriptable. `tail -f app.log | claude -p "Slack me if you see any anomalies appear in this log stream"` _works_. Your CI can run `claude -p "If there are new text strings, translate them into French and raise a PR for @lang-fr-team to review"`.
+- **Enterprise-ready**: Use Anthropic's API, or host on AWS or GCP. Enterprise-grade [security](/en/docs/claude-code/security), [privacy](/en/docs/claude-code/data-usage), and [compliance](https://trust.anthropic.com/) is built-in.
+
+## Next steps
+
+<CardGroup>
+  <Card title="Quickstart" icon="rocket" href="/en/docs/claude-code/quickstart">
+    See Claude Code in action with practical examples
+  </Card>
+
+  <Card title="Common workflows" icon="graduation-cap" href="/en/docs/claude-code/common-workflows">
+    Step-by-step guides for common workflows
+  </Card>
+
+  <Card title="Troubleshooting" icon="wrench" href="/en/docs/claude-code/troubleshooting">
+    Solutions for common issues with Claude Code
+  </Card>
+
+  <Card title="IDE setup" icon="laptop" href="/en/docs/claude-code/ide-integrations">
+    Add Claude Code to your IDE
+  </Card>
+</CardGroup>
+
+## Additional resources
+
+<CardGroup>
+  <Card title="Host on AWS or GCP" icon="cloud" href="/en/docs/claude-code/third-party-integrations">
+    Configure Claude Code with Amazon Bedrock or Google Vertex AI
+  </Card>
+
+  <Card title="Settings" icon="gear" href="/en/docs/claude-code/settings">
+    Customize Claude Code for your workflow
+  </Card>
+
+  <Card title="Commands" icon="terminal" href="/en/docs/claude-code/cli-reference">
+    Learn about CLI commands and controls
+  </Card>
+
+  <Card title="Reference implementation" icon="code" href="https://github.com/anthropics/claude-code/tree/main/.devcontainer">
+    Clone our development container reference implementation
+  </Card>
+
+  <Card title="Security" icon="shield" href="/en/docs/claude-code/security">
+    Discover Claude Code's safeguards and best practices for safe usage
+  </Card>
+
+  <Card title="Privacy and data usage" icon="lock" href="/en/docs/claude-code/data-usage">
+    Understand how Claude Code handles your data
+  </Card>
+</CardGroup>
+
+# Quickstart
+
+# Quickstart
+
+> Welcome to Claude Code!
+
+This quickstart guide will have you using AI-powered coding assistance in just a few minutes. By the end, you'll understand how to use Claude Code for common development tasks.
+
+## Before you begin
+
+Make sure you have:
+
+- A terminal or command prompt open
+- A code project to work with
+
+## Step 1: Install Claude Code
+
+### NPM Install
+
+If you have [Node.js 18 or newer installed](https://nodejs.org/en/download/):
+
+```sh
+npm install -g @anthropic-ai/claude-code
+```
+
+### Native Install
+
+<Tip>
+  Alternatively, try our new native install, now in beta.
+</Tip>
+
+**macOS, Linux, WSL:**
+
+```bash
+curl -fsSL claude.ai/install.sh | bash
+```
+
+**Windows PowerShell:**
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+## Step 2: Start your first session
+
+Open your terminal in any project directory and start Claude Code:
+
+```bash
+cd /path/to/your/project
+claude
+```
+
+You'll see the Claude Code prompt inside a new interactive session:
+
+```
+✻ Welcome to Claude Code!
+
+...
+
+> Try "create a util logging.py that..."
+```
+
+<Tip>
+  Your credentials are securely stored on your system. Learn more in [Credential Management](/en/docs/claude-code/iam#credential-management).
+</Tip>
+
+## Step 3: Ask your first question
+
+Let's start with understanding your codebase. Try one of these commands:
+
+```
+> what does this project do?
+```
+
+Claude will analyze your files and provide a summary. You can also ask more specific questions:
+
+```
+> what technologies does this project use?
+```
+
+```
+> where is the main entry point?
+```
+
+```
+> explain the folder structure
+```
+
+You can also ask Claude about its own capabilities:
+
+```
+> what can Claude Code do?
+```
+
+```
+> how do I use slash commands in Claude Code?
+```
+
+```
+> can Claude Code work with Docker?
+```
+
+<Note>
+  Claude Code reads your files as needed - you don't have to manually add context. Claude also has access to its own documentation and can answer questions about its features and capabilities.
+</Note>
+
+## Step 4: Make your first code change
+
+Now let's make Claude Code do some actual coding. Try a simple task:
+
+```
+> add a hello world function to the main file
+```
+
+Claude Code will:
+
+1. Find the appropriate file
+2. Show you the proposed changes
+3. Ask for your approval
+4. Make the edit
+
+<Note>
+  Claude Code always asks for permission before modifying files. You can approve individual changes or enable "Accept all" mode for a session.
+</Note>
+
+## Step 5: Use Git with Claude Code
+
+Claude Code makes Git operations conversational:
+
+```
+> what files have I changed?
+```
+
+```
+> commit my changes with a descriptive message
+```
+
+You can also prompt for more complex Git operations:
+
+```
+> create a new branch called feature/quickstart
+```
+
+```
+> show me the last 5 commits
+```
+
+```
+> help me resolve merge conflicts
+```
+
+## Step 6: Fix a bug or add a feature
+
+Claude is proficient at debugging and feature implementation.
+
+Describe what you want in natural language:
+
+```
+> add input validation to the user registration form
+```
+
+Or fix existing issues:
+
+```
+> there's a bug where users can submit empty forms - fix it
+```
+
+Claude Code will:
+
+- Locate the relevant code
+- Understand the context
+- Implement a solution
+- Run tests if available
+
+## Step 7: Test out other common workflows
+
+There are a number of ways to work with Claude:
+
+**Refactor code**
+
+```
+> refactor the authentication module to use async/await instead of callbacks
+```
+
+**Write tests**
+
+```
+> write unit tests for the calculator functions
+```
+
+**Update documentation**
+
+```
+> update the README with installation instructions
+```
+
+**Code review**
+
+```
+> review my changes and suggest improvements
+```
+
+<Tip>
+  **Remember**: Claude Code is your AI pair programmer. Talk to it like you would a helpful colleague - describe what you want to achieve, and it will help you get there.
+</Tip>
+
+## Essential commands
+
+Here are the most important commands for daily use:
+
+| Command             | What it does                      | Example                             |
+| ------------------- | --------------------------------- | ----------------------------------- |
+| `claude`            | Start interactive mode            | `claude`                            |
+| `claude "task"`     | Run a one-time task               | `claude "fix the build error"`      |
+| `claude -p "query"` | Run one-off query, then exit      | `claude -p "explain this function"` |
+| `claude -c`         | Continue most recent conversation | `claude -c`                         |
+| `claude -r`         | Resume a previous conversation    | `claude -r`                         |
+| `claude commit`     | Create a Git commit               | `claude commit`                     |
+| `/clear`            | Clear conversation history        | `> /clear`                          |
+| `/help`             | Show available commands           | `> /help`                           |
+| `exit` or Ctrl+C    | Exit Claude Code                  | `> exit`                            |
+
+See the [CLI reference](/en/docs/claude-code/cli-reference) for a complete list of commands.
+
+## Pro tips for beginners
+
+<AccordionGroup>
+  <Accordion title="Be specific with your requests">
+    Instead of: "fix the bug"
+
+    Try: "fix the login bug where users see a blank screen after entering wrong credentials"
+
+  </Accordion>
+
+  <Accordion title="Use step-by-step instructions">
+    Break complex tasks into steps:
+
+    ```
+    > 1. create a new database table for user profiles
+    ```
+
+    ```
+    > 2. create an API endpoint to get and update user profiles
+    ```
+
+    ```
+    > 3. build a webpage that allows users to see and edit their information
+    ```
+
+  </Accordion>
+
+  <Accordion title="Let Claude explore first">
+    Before making changes, let Claude understand your code:
+
+    ```
+    > analyze the database schema
+    ```
+
+    ```
+    > build a dashboard showing products that are most frequently returned by our UK customers
+    ```
+
+  </Accordion>
+
+  <Accordion title="Save time with shortcuts">
+    * Use Tab for command completion
+    * Press ↑ for command history
+    * Type `/` to see all slash commands
+  </Accordion>
+</AccordionGroup>
+
+## What's next?
+
+Now that you've learned the basics, explore more advanced features:
+
+<CardGroup cols={3}>
+  <Card title="Common workflows" icon="graduation-cap" href="/en/docs/claude-code/common-workflows">
+    Step-by-step guides for common tasks
+  </Card>
+
+  <Card title="CLI reference" icon="terminal" href="/en/docs/claude-code/cli-reference">
+    Master all commands and options
+  </Card>
+
+  <Card title="Configuration" icon="gear" href="/en/docs/claude-code/settings">
+    Customize Claude Code for your workflow
+  </Card>
+</CardGroup>
+
+## Getting help
+
+- **In Claude Code**: Type `/help` or ask "how do I..."
+- **Documentation**: You're here! Browse other guides
+- **Community**: Join our [Discord](https://www.anthropic.com/discord) for tips and support
+
+# Common Workflows
+
 # Common workflows
 
 > Learn about common workflows with Claude Code.
@@ -156,6 +538,70 @@ Suppose you need to update old code to use modern patterns and practices.
 - Ask Claude to explain the benefits of the modern approach
 - Request that changes maintain backward compatibility when needed
 - Do refactoring in small, testable increments
+  </Tip>
+
+---
+
+## Use specialized subagents
+
+Suppose you want to use specialized AI subagents to handle specific tasks more effectively.
+
+<Steps>
+  <Step title="View available subagents">
+    ```
+    > /agents
+    ```
+
+    This shows all available subagents and lets you create new ones.
+
+  </Step>
+
+  <Step title="Use subagents automatically">
+    Claude Code will automatically delegate appropriate tasks to specialized subagents:
+
+    ```
+    > review my recent code changes for security issues
+    ```
+
+    ```
+    > run all tests and fix any failures
+    ```
+
+  </Step>
+
+  <Step title="Explicitly request specific subagents">
+    ```
+    > use the code-reviewer subagent to check the auth module
+    ```
+
+    ```
+    > have the debugger subagent investigate why users can't log in
+    ```
+
+  </Step>
+
+  <Step title="Create custom subagents for your workflow">
+    ```
+    > /agents
+    ```
+
+    Then select "Create New subagent" and follow the prompts to define:
+
+    * Subagent type (e.g., `api-designer`, `performance-optimizer`)
+    * When to use it
+    * Which tools it can access
+    * Its specialized system prompt
+
+  </Step>
+</Steps>
+
+<Tip>
+  Tips:
+
+- Create project-specific subagents in `.claude/agents/` for team sharing
+- Use descriptive `description` fields to enable automatic delegation
+- Limit tool access to what each subagent actually needs
+- Check the [subagents documentation](/en/docs/claude-code/sub-agents) for detailed examples
   </Tip>
 
 ---
@@ -702,7 +1148,7 @@ Suppose you want to create reusable slash commands for your project that all tea
 
   <Step title="Use your custom command in Claude Code">
     ```
-    > /project:optimize
+    > /optimize
     ```
   </Step>
 </Steps>
@@ -710,8 +1156,8 @@ Suppose you want to create reusable slash commands for your project that all tea
 <Tip>
   Tips:
 
-- Command names are derived from the filename (e.g., `optimize.md` becomes `/project:optimize`)
-- You can organize commands in subdirectories (e.g., `.claude/commands/frontend/component.md` becomes `/project:frontend:component`)
+- Command names are derived from the filename (e.g., `optimize.md` becomes `/optimize`)
+- You can organize commands in subdirectories (e.g., `.claude/commands/frontend/component.md` creates `/component` with "(project:frontend)" shown in the description)
 - Project commands are available to everyone who clones the repository
 - The Markdown file content becomes the prompt sent to Claude when the command is invoked
   </Tip>
@@ -735,7 +1181,7 @@ Suppose you want to create flexible slash commands that can accept additional in
     In your Claude session, use the command with arguments.
 
     ```
-    > /project:fix-issue 123
+    > /fix-issue 123
     ```
 
     This will replace \$ARGUMENTS with "123" in the prompt.
@@ -771,7 +1217,7 @@ Suppose you want to create personal slash commands that work across all your pro
 
   <Step title="Use your personal custom command">
     ```
-    > /user:security-review
+    > /security-review
     ```
   </Step>
 </Steps>
@@ -779,10 +1225,54 @@ Suppose you want to create personal slash commands that work across all your pro
 <Tip>
   Tips:
 
-- Personal commands are prefixed with `/user:` instead of `/project:`
+- Personal commands show "(user)" in their description when listed with `/help`
 - Personal commands are only available to you and not shared with your team
 - Personal commands work across all your projects
 - You can use these for consistent workflows across different codebases
+  </Tip>
+
+---
+
+## Ask Claude about its capabilities
+
+Claude has built-in access to its documentation and can answer questions about its own features and limitations.
+
+### Example questions
+
+```
+> can Claude Code create pull requests?
+```
+
+```
+> how does Claude Code handle permissions?
+```
+
+```
+> what slash commands are available?
+```
+
+```
+> how do I use MCP with Claude Code?
+```
+
+```
+> how do I configure Claude Code for Amazon Bedrock?
+```
+
+```
+> what are the limitations of Claude Code?
+```
+
+<Note>
+  Claude provides documentation-based answers to these questions. For executable examples and hands-on demonstrations, refer to the specific workflow sections above.
+</Note>
+
+<Tip>
+  Tips:
+
+- Claude always has access to the latest Claude Code documentation, regardless of the version you're using
+- Ask specific questions to get detailed answers
+- Claude can explain complex features like MCP integration, enterprise configurations, and advanced workflows
   </Tip>
 
 ---

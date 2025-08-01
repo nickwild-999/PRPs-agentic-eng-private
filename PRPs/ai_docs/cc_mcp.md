@@ -20,6 +20,7 @@ Model Context Protocol (MCP) is an open protocol that enables LLMs to access ext
 
     # Example: Adding a local server
     claude mcp add my-server -e API_KEY=123 -- /path/to/server arg1 arg2
+    # This creates: command="/path/to/server", args=["arg1", "arg2"]
     ```
 
   </Step>
@@ -82,6 +83,17 @@ Model Context Protocol (MCP) is an open protocol that enables LLMs to access ext
 - Use `/mcp` to authenticate with remote servers that require OAuth 2.0 authentication
   </Tip>
 
+<Warning>
+  **Windows Users**: On native Windows (not WSL), local MCP servers that use `npx` require the `cmd /c` wrapper to ensure proper execution.
+
+```bash
+# This creates command="cmd" which Windows can execute
+claude mcp add my-server -- cmd /c npx -y @some/package
+```
+
+Without the `cmd /c` wrapper, you'll encounter "Connection closed" errors because Windows cannot directly execute `npx`.
+</Warning>
+
 ## Understanding MCP server scopes
 
 MCP servers can be configured at three different scope levels, each serving distinct purposes for managing server accessibility and sharing. Understanding these scopes helps you determine the best way to configure servers for your specific needs.
@@ -143,6 +155,42 @@ Select your scope based on:
 - **Local scope**: Personal servers, experimental configurations, or sensitive credentials specific to one project
 - **Project scope**: Team-shared servers, project-specific tools, or services required for collaboration
 - **User scope**: Personal utilities needed across multiple projects, development tools, or frequently-used services
+
+### Environment variable expansion in `.mcp.json`
+
+Claude Code supports environment variable expansion in `.mcp.json` files, allowing teams to share configurations while maintaining flexibility for machine-specific paths and sensitive values like API keys.
+
+**Supported syntax:**
+
+- `${VAR}` - Expands to the value of environment variable `VAR`
+- `${VAR:-default}` - Expands to `VAR` if set, otherwise uses `default`
+
+**Expansion locations:**
+Environment variables can be expanded in:
+
+- `command` - The server executable path
+- `args` - Command-line arguments
+- `env` - Environment variables passed to the server
+- `url` - For SSE/HTTP server types
+- `headers` - For SSE/HTTP server authentication
+
+**Example with variable expansion:**
+
+```json
+{
+  "mcpServers": {
+    "api-server": {
+      "type": "sse",
+      "url": "${API_BASE_URL:-https://api.example.com}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_KEY}"
+      }
+    }
+  }
+}
+```
+
+If a required environment variable is not set and has no default value, Claude Code will fail to parse the config.
 
 ## Authenticate with remote MCP servers
 
