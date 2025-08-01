@@ -49,25 +49,45 @@ Using PRPs/templates/prp_base.md as template:
 
 ### Validation Gates (Must be Executable by the AI agent)
 
+Use appropriate validation commands for the project type:
+
+**For Laravel Projects:**
 ```bash
 # Syntax/Style
-ruff check --fix && mypy .
+vendor/bin/pint
+vendor/bin/phpstan analyse
 
 # Unit Tests
-uv run pytest tests/ -v
+php artisan test --coverage
+```
 
+**For Node.js/React Projects:**
+```bash
+# Syntax/Style
+npm run lint
+npm run type-check
+
+# Unit Tests
+npm run test
 ```
 
 The more validation gates the better, but make sure they are executable by the AI agent.
-Include tests, mcp servers, and any other relevant validation gates. Get creative with the validation gates.
+Include tests, appropriate linting tools, and any other relevant validation gates for the specific technology stack.
 
 **_ CRITICAL AFTER YOU ARE DONE RESEARCHING AND EXPLORING THE CODEBASE BEFORE YOU START WRITING THE PRP _**
 
 **_ ULTRATHINK ABOUT THE PRP AND PLAN YOUR APPROACH IN DETAILED TODOS THEN START WRITING THE PRP _**
 
-## Output
+## Auto-Save PRP
 
-Save as: `PRPs/{feature-name}.md`
+**CRITICAL: After generating the complete PRP content, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the feature (e.g., "user-authentication-system", "payment-processing-module")
+2. **Use Write tool**: Save the complete PRP content to `PRPs/{feature-name}-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the PRP and execute it when ready using `/execute-base-prp`
+
+**Do NOT just display the PRP content - you MUST save it to a file.**
 
 ## Quality Checklist
 
@@ -80,3 +100,5 @@ Save as: `PRPs/{feature-name}.md`
 Score the PRP on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
 
 Remember: The goal is one-pass implementation success through comprehensive context.
+
+**Final Step: ALWAYS use the Write tool to save the generated PRP to PRPs/{feature-name}-{date}.md and confirm the save to the user.**

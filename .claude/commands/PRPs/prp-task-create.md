@@ -90,9 +90,16 @@ ACTION path/to/file:
 - Note security concerns
 - Document assumptions
 
-## Output
+## Auto-Save Task PRP
 
-Save as: `TASK_PRP/PRPs/{task-name}.md`
+**CRITICAL: After generating the complete task document, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the task (e.g., "update-auth-middleware", "add-logging-system")
+2. **Use Write tool**: Save the complete task content to `PRPs/{task-name}-task-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the task PRP and execute it when ready
+
+**Do NOT just display the task content - you MUST save it to a file.**
 
 ## Quality Checklist
 

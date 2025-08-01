@@ -73,9 +73,16 @@ Include tests, build validation, linting, and any other relevant validation gate
 
 **_ ULTRATHINK ABOUT THE PRP AND PLAN YOUR APPROACH IN DETAILED TODOS THEN START WRITING THE PRP _**
 
-## Output
+## Auto-Save TypeScript PRP
 
-Save as: `PRPs/{feature-name}.md`
+**CRITICAL: After generating the complete TypeScript PRP content, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the feature (e.g., "react-component-system", "api-integration-layer")
+2. **Use Write tool**: Save the complete PRP content to `PRPs/{feature-name}-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the PRP and execute it when ready using `/execute-base-prp`
+
+**Do NOT just display the PRP content - you MUST save it to a file.**
 
 ## Quality Checklist
 

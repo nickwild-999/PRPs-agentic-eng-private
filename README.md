@@ -168,22 +168,22 @@ The `.claude/commands/` directory contains 12 pre-configured commands that appea
 
 ### Executing a PRP
 
-1. **Using the runner script**:
-
+1. **Using Claude commands** (Recommended):
    ```bash
-   # Interactive mode (recommended for development)
+   # Execute saved PRPs directly
+   /execute-base-prp PRPs/my-feature-2025-01-01.md
+   
+   # Or use file reference
+   claude -f PRPs/my-feature-2025-01-01.md
+   ```
+
+2. **Using the Python runner** (Optional):
+   ```bash
+   # Interactive mode (if Python runner is preferred)
    uv run PRPs/scripts/prp_runner.py --prp my-feature --interactive
 
-   # Headless mode (for CI/CD)
+   # JSON output mode (for CI/CD)
    uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format json
-
-   # Streaming JSON (for real-time monitoring)
-   uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format stream-json
-   ```
-
-2. **Using Claude commands**:
-   ```
-   /execute-base-prp PRPs/my-feature.md
    ```
 
 ### PRP Best Practices

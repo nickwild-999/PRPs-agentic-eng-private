@@ -33,21 +33,33 @@ This is a **PRP (Product Requirement Prompt) Framework** repository, not a tradi
 
 ### PRP Execution
 
+**Primary Method (Direct Claude Code):**
 ```bash
-# Interactive mode (recommended for development)
+# Execute saved PRPs directly
+/execute-base-prp PRPs/my-feature-2025-01-01.md
+# or
+claude -f PRPs/my-feature-2025-01-01.md
+```
+
+**Alternative Method (Python Runner - Optional):**
+```bash
+# Interactive mode (if Python runner is preferred)
 uv run PRPs/scripts/prp_runner.py --prp [prp-name] --interactive
 
-# Headless mode (for CI/CD)
+# JSON output mode
 uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
-
-# Streaming JSON (for real-time monitoring)
-uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format stream-json
 ```
 
 ### Key Claude Commands
 
-- `/prp-base-create` - Generate comprehensive PRPs with research
-- `/prp-base-execute` - Execute PRPs against codebase
+**PRP Creation (Auto-saves to PRPs/ directory):**
+- `/prp-base-create` - Generate comprehensive PRPs with research and auto-save
+- `/prp-planning-create` - Create project planning PRPs with auto-save
+- `/prp-spec-create` - Generate specification PRPs with auto-save
+- `/prp-task-create` - Create focused task PRPs with auto-save
+
+**PRP Execution:**
+- `/execute-base-prp` - Execute saved PRPs against codebase
 - `/prp-planning-create` - Create planning documents with diagrams
 - `/prime-core` - Prime Claude with project context
 - `/review-staged-unstaged` - Review git changes using PRP methodology
@@ -70,21 +82,35 @@ uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format stream-json
 - **Implementation Blueprint**: Pseudocode with critical details and task lists
 - **Validation Loop**: Executable commands for syntax, tests, integration
 
-### Validation Gates (Must be Executable)
+### Validation Gates (Must be Executable - Adapt to Your Stack)
 
 ```bash
-# Level 1: Syntax & Style
+# Level 1: Syntax & Style (Examples by technology)
+# Laravel:
+vendor/bin/pint && vendor/bin/phpstan analyse
+
+# Node.js/React:
+npm run lint && npm run type-check
+
+# Python (if applicable):
 ruff check --fix && mypy .
 
 # Level 2: Unit Tests
-uv run pytest tests/ -v
+# Laravel:
+php artisan test --coverage
 
-# Level 3: Integration
-uv run uvicorn main:app --reload
-curl -X POST http://localhost:8000/endpoint -H "Content-Type: application/json" -d '{...}'
+# Node.js/React:
+npm run test
 
-# Level 4: Deployment
-# mcp servers, or other creative ways to self validate
+# Python:
+pytest tests/ -v
+
+# Level 3: Integration (Example patterns)
+# API Testing:
+curl -X POST http://localhost:8000/api/endpoint -H "Content-Type: application/json" -d '{...}'
+
+# Level 4: Deployment & Advanced Validation
+# MCP servers, load testing, or other creative validation methods
 ```
 
 ## Anti-Patterns to Avoid
@@ -128,11 +154,11 @@ PRPs-agentic-eng/
   settings.local.json # Tool permissions
 PRPs/
   templates/          # PRP templates with validation
-  scripts/           # PRP runner and utilities
+  scripts/           # PRP runner and utilities (optional Python tools)
   ai_docs/           # Curated Claude Code documentation
    *.md               # Active and example PRPs
  claude_md_files/        # Framework-specific CLAUDE.md examples
- pyproject.toml         # Python package configuration
+ pyproject.toml         # Framework package configuration (optional)
 ```
 
 Remember: This framework is about **one-pass implementation success through comprehensive context and validation**. Every PRP should contain the exact context for an AI agent to successfully implement working code in a single pass.

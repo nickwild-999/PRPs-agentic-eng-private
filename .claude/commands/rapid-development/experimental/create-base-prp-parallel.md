@@ -194,9 +194,16 @@ Before finalizing the PRP, ensure:
 - [ ] Configuration examples provided
 - [ ] Known issues and workarounds documented
 
-## Output
+## Auto-Save Parallel Research PRP
 
-Save the comprehensive PRP as: `PRPs/{feature-name}-parallel.md`
+**CRITICAL: After generating the comprehensive PRP with parallel research, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the feature (e.g., "user-auth-parallel", "payment-system-parallel")
+2. **Use Write tool**: Save the complete PRP content to `PRPs/{feature-name}-parallel-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the comprehensive PRP and execute it when ready
+
+**Do NOT just display the PRP content - you MUST save it to a file.**
 
 ## Success Metrics
 

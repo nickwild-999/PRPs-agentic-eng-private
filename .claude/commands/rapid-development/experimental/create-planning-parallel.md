@@ -208,7 +208,16 @@ gantt
 
 ## Phase 5: Save and Handoff
 
-Save the completed PRD as: `PRPs/{sanitized-feature-name}-prd.md`
+## Auto-Save Parallel Planning PRP
+
+**CRITICAL: After generating the comprehensive planning document with parallel research, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the project (e.g., "ecommerce-platform-planning", "crm-system-planning")
+2. **Use Write tool**: Save the complete planning content to `PRPs/{project-name}-planning-parallel-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the comprehensive planning PRP and create implementation PRPs when ready
+
+**Do NOT just display the planning content - you MUST save it to a file.**
 
 ### Quality Checklist
 Before marking complete, verify:

@@ -103,9 +103,16 @@ task_name:
 - Migration best practices
 - Testing strategies
 
-## Output
+## Auto-Save Specification PRP
 
-Save as: `SPEC_PRP/PRPs/{spec-name}.md`
+**CRITICAL: After generating the complete specification document, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the specification (e.g., "database-migration-spec", "api-refactor-spec")
+2. **Use Write tool**: Save the complete specification content to `PRPs/{spec-name}-spec-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the specification PRP and execute it when ready
+
+**Do NOT just display the specification content - you MUST save it to a file.**
 
 ## Quality Checklist
 

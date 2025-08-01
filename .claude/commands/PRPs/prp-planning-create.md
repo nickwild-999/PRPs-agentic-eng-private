@@ -123,7 +123,16 @@ diagrams_needed:
 10. Appendices
 ```
 
-Save as: `PRPs/{feature-name}-prd.md`
+## Auto-Save Planning PRP
+
+**CRITICAL: After generating the complete planning document, you MUST automatically save it using the Write tool.**
+
+1. **Generate filename**: Create a descriptive filename based on the project (e.g., "compliance-system-planning", "ecommerce-platform-planning")
+2. **Use Write tool**: Save the complete planning content to `PRPs/{project-name}-planning-{YYYY-MM-DD}.md`
+3. **Confirm save**: Display success message with the exact file path
+4. **Next steps**: Inform user they can review the planning PRP and create implementation PRPs when ready
+
+**Do NOT just display the planning content - you MUST save it to a file.**
 
 ## Quality Checklist
 - [ ] Problem clearly articulated
