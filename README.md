@@ -37,10 +37,10 @@ A PRP supplies an AI coding agent with everything it needs to deliver a vertical
 - Technology-specific validation patterns
 
 ### 🔄 **Context7 Auto-Documentation**
-- **Smart Detection**: Automatically identifies frameworks from requests (Laravel, React, Next.js, etc.)
+- **Smart Detection**: Automatically identifies ANY frameworks from requests (Astro, React, Laravel, Sanity, etc.)
 - **Live Documentation**: Fetches current, up-to-date library documentation during PRP creation
 - **Comprehensive Context**: Includes API references, best practices, and implementation patterns
-- **Framework Coverage**: Laravel 12, React 19, Next.js 15, Node.js, Python, and more
+- **Universal Coverage**: Works with ANY technology stack - Astro, React, Laravel, Sanity, Python, Node.js, and more
 - **Automatic Integration**: No manual documentation lookup required
 
 ---
@@ -142,24 +142,31 @@ cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
 ```
 
-### Option 4: Laravel 12 Complete Setup
+### Option 4: Framework-Specific Complete Setup
 
-For complete Laravel 12 setup with Livewire 3 + Filament 3:
+For complete setup with any framework:
 
 ```bash
-# Follow the comprehensive setup guide
-cat LARAVEL-SETUP-GUIDE.md
+# Follow the comprehensive setup guide for any stack
+cat PROJECT-SETUP-GUIDE.md
 
-# Or quick start:
+# Quick start examples:
+
+# Laravel project:
 mkdir my-laravel-project && cd my-laravel-project
 cp -r /path/to/PRPs-agentic-eng/.claude .
 cp -r /path/to/PRPs-agentic-eng/PRPs .
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
-
-# Install Laravel 12 with full stack
 composer create-project laravel/laravel . "^12.0"
-composer require livewire/livewire filament/filament
-# ... (see LARAVEL-SETUP-GUIDE.md for complete instructions)
+
+# Astro project:
+mkdir my-astro-project && cd my-astro-project
+cp -r /path/to/PRPs-agentic-eng/.claude .
+cp -r /path/to/PRPs-agentic-eng/PRPs .
+cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
+npm create astro@latest . -- --template minimal --typescript
+
+# See PROJECT-SETUP-GUIDE.md for complete instructions for any framework
 ```
 
 ---
@@ -169,25 +176,30 @@ composer require livewire/livewire filament/filament
 ### **1. Project Planning**
 ```bash
 # Create comprehensive project planning PRP with Context7 docs (auto-saves)
-/prp-planning-create compliance accreditation assessment system
+/prp-planning-create blog platform with Astro and Sanity CMS
 
-# ✅ Auto-detects: Laravel, Livewire, Filament frameworks
-# ✅ Auto-fetches: Current Laravel 12, Livewire 3, Filament 3 documentation
-# ✅ Auto-saved to: PRPs/compliance-system-planning-2025-01-01.md
+# ✅ Auto-detects: Astro, Sanity CMS frameworks
+# ✅ Auto-fetches: Current Astro, Sanity documentation and best practices
+# ✅ Auto-saved to: PRPs/blog-platform-planning-2025-08-01.md
+
+# Or for Laravel projects:
+/prp-planning-create compliance system with Laravel and React
+# ✅ Auto-detects: Laravel, React frameworks
+# ✅ Auto-fetches: Current Laravel, React documentation
 ```
 
 ### **2. Implementation PRP Creation**
 ```bash
 # Create focused implementation PRPs with Context7 docs (auto-saves)
-/prp-base-create user authentication system with Laravel Sanctum
-/prp-base-create multi-step Livewire forms with file uploads  
-/prp-base-create Filament admin panel with user management
+/prp-base-create user authentication with Laravel built-in auth
+/prp-base-create React component library with TypeScript
+/prp-base-create Astro blog with Sanity content management
 
-# ✅ Auto-detects: Laravel, Sanctum, Livewire, Filament
-# ✅ Auto-fetches: Current documentation for each technology
-# ✅ Auto-saved to: PRPs/user-auth-2025-01-01.md (with Context7 docs)
-# ✅ Auto-saved to: PRPs/multi-step-forms-2025-01-01.md (with Context7 docs)
-# ✅ Auto-saved to: PRPs/filament-admin-2025-01-01.md (with Context7 docs)
+# ✅ Auto-detects: Laravel/React/Astro, TypeScript, Sanity
+# ✅ Auto-fetches: Current documentation for detected technologies
+# ✅ Auto-saved to: PRPs/user-auth-2025-08-01.md (with Context7 docs)
+# ✅ Auto-saved to: PRPs/react-components-2025-08-01.md (with Context7 docs)
+# ✅ Auto-saved to: PRPs/astro-blog-2025-08-01.md (with Context7 docs)
 ```
 
 ### **3. Code Implementation**
@@ -385,7 +397,8 @@ git push origin development
 
 ## 📚 Additional Resources
 
-- **Laravel Setup Guide**: `LARAVEL-SETUP-GUIDE.md` - Complete step-by-step Laravel 12 setup
+- **Project Setup Guide**: `PROJECT-SETUP-GUIDE.md` - Complete step-by-step setup for ANY framework
+- **Context7 Integration Guide**: `CONTEXT7-INTEGRATION-GUIDE.md` - Complete Context7 documentation integration
 - **AI Documentation**: `PRPs/ai_docs/` - Curated Claude Code documentation
 - **Example PRPs**: `PRPs/example-*.md` - Real-world PRP examples
 - **Video Walkthrough**: https://www.youtube.com/watch?v=KVOZ9s1S9Gk

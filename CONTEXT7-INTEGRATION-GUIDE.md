@@ -21,16 +21,15 @@ When you create a PRP, the system automatically detects relevant technologies fr
 
 ### Supported Technologies
 
-Context7 integration works with major frameworks and libraries:
+Context7 integration works with ANY frameworks and libraries:
 
-- **Laravel**: Complete Laravel documentation including packages
-- **React**: React library and ecosystem documentation
-- **Next.js**: Next.js framework documentation
-- **Node.js**: Node.js and popular packages
-- **Python**: Python frameworks and libraries
-- **TypeScript**: TypeScript language and tooling
-- **Vue.js**: Vue.js framework documentation
-- **And many more...**
+- **Frontend**: Astro, React, Vue.js, Next.js, Svelte, Angular
+- **Backend**: Laravel, Node.js, Python (Django/FastAPI), Ruby on Rails
+- **CMS**: Sanity, Strapi, Contentful, WordPress
+- **Databases**: PostgreSQL, MongoDB, Redis, SQLite
+- **Languages**: TypeScript, JavaScript, PHP, Python, Go
+- **Tools**: Vite, Webpack, Docker, Tailwind CSS
+- **And hundreds more...**
 
 ## Enhanced PRP Commands
 
@@ -38,24 +37,36 @@ All PRP creation commands now include Context7 integration:
 
 ### `/prp-base-create` - Base Implementation PRPs
 ```bash
-/prp-base-create Laravel API with Sanctum authentication
-
-# What happens:
-# 1. Detects: Laravel, Sanctum
-# 2. Fetches: Laravel API docs, Sanctum authentication guides
-# 3. Includes: Current best practices, security patterns, code examples
+# Example 1: Astro + Sanity stack
+/prp-base-create blog system with Astro and Sanity CMS
+# 1. Detects: Astro, Sanity
+# 2. Fetches: Astro SSG docs, Sanity integration guides
+# 3. Includes: Performance patterns, content modeling
 # 4. Saves: Comprehensive PRP with live documentation
+
+# Example 2: Laravel with built-in auth (not Sanctum)
+/prp-base-create user authentication with Laravel built-in auth
+# 1. Detects: Laravel
+# 2. Fetches: Laravel authentication docs (built-in, not Sanctum)
+# 3. Includes: Session-based auth, middleware patterns
+# 4. Saves: Authentication PRP with standard Laravel auth
 ```
 
 ### `/prp-planning-create` - Project Planning PRPs
 ```bash
-/prp-planning-create React e-commerce platform with Next.js
+# Example 1: Modern stack
+/prp-planning-create portfolio website with Astro and TypeScript
+# 1. Detects: Astro, TypeScript
+# 2. Fetches: Astro architecture docs, TypeScript patterns
+# 3. Includes: Performance optimization, type safety
+# 4. Saves: Planning document with modern web architecture
 
-# What happens:
-# 1. Detects: React, Next.js, e-commerce patterns
-# 2. Fetches: Architectural guidance, performance best practices
-# 3. Includes: Scalability patterns, SEO considerations
-# 4. Saves: Planning document with technical architecture
+# Example 2: Full-stack
+/prp-planning-create SaaS application with React and Laravel API
+# 1. Detects: React, Laravel
+# 2. Fetches: React SPA patterns, Laravel API documentation
+# 3. Includes: Authentication flows, state management
+# 4. Saves: Full-stack planning document
 ```
 
 ### `/prp-spec-create` - Specification PRPs
@@ -254,31 +265,40 @@ When frameworks release updates:
 
 ## Examples
 
-### Laravel Application Example
+### Astro + Sanity Example
 ```bash
-/prp-base-create Laravel 12 user management with Livewire components and Filament admin
+/prp-base-create blog platform with Astro and Sanity CMS
 
-# Auto-detects: Laravel, Livewire, Filament
-# Fetches: Laravel 12 docs, Livewire 3 component patterns, Filament 3 resources
-# Result: Comprehensive PRP with current best practices for all three technologies
+# Auto-detects: Astro, Sanity
+# Fetches: Astro SSG docs, Sanity schema design, content delivery
+# Result: Complete blog system PRP with static generation and headless CMS
 ```
 
-### React Application Example
+### React Component Library Example
 ```bash
-/prp-base-create React component library with TypeScript and Storybook
+/prp-base-create design system with React and TypeScript
 
-# Auto-detects: React, TypeScript, Storybook
-# Fetches: React component patterns, TypeScript integration, Storybook documentation
-# Result: Complete PRP with type-safe component development practices
+# Auto-detects: React, TypeScript
+# Fetches: React component patterns, TypeScript integration, design system practices
+# Result: Type-safe component library PRP with modern React patterns
 ```
 
-### Full-Stack Example
+### Laravel with Standard Auth Example
 ```bash
-/prp-planning-create full-stack application with Next.js frontend and Laravel API
+/prp-base-create user management with Laravel built-in authentication
 
-# Auto-detects: Next.js, Laravel, API integration
-# Fetches: Next.js app architecture, Laravel API patterns, integration strategies
-# Result: Comprehensive planning document with frontend-backend communication patterns
+# Auto-detects: Laravel (standard auth, not Sanctum)
+# Fetches: Laravel authentication docs, session management, middleware
+# Result: Traditional Laravel auth PRP with session-based authentication
+```
+
+### Mixed Stack Example
+```bash
+/prp-planning-create content site with Astro frontend and Sanity backend
+
+# Auto-detects: Astro, Sanity, static generation patterns
+# Fetches: Astro-Sanity integration, performance optimization, content modeling
+# Result: Comprehensive JAMstack planning document with CMS integration
 ```
 
 ## Integration with Existing Workflow

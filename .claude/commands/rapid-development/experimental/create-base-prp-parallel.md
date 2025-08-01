@@ -30,8 +30,8 @@ Focus on codebase exploration only - do not write code. Use Glob, Grep, and Read
 ```
 Task: Context7 Documentation + External Technical Research
 Prompt: Research technical resources for "$ARGUMENTS" using Context7 and external sources. First use Context7 for current documentation, then supplement with external research:
-- Auto-detect relevant frameworks/libraries from the feature description
-- Use mcp__context7__resolve-library-id for identified technologies
+- Auto-detect ANY relevant frameworks/libraries from the feature description (Astro, React, Laravel, Sanity, Python, etc.)
+- Use mcp__context7__resolve-library-id for ALL identified technologies regardless of stack
 - Use mcp__context7__get-library-docs to get current, comprehensive documentation
 - Library documentation and API references (Context7 + specific URLs)
 - Implementation examples from GitHub, StackOverflow, and technical blogs
@@ -40,7 +40,7 @@ Prompt: Research technical resources for "$ARGUMENTS" using Context7 and externa
 - Performance considerations and optimization techniques
 - Security considerations and vulnerability patterns
 
-Focus purely on research - do not write code. Use Context7 first, then web search extensively. Return comprehensive technical research with Context7 docs, specific URLs, code examples, and implementation guidance.
+Focus purely on research - do not write code. Use Context7 first for ANY technology stack, then web search extensively. Return comprehensive technical research with Context7 docs, specific URLs, code examples, and implementation guidance.
 ```
 
 #### Agent 3: Testing & Validation Strategy

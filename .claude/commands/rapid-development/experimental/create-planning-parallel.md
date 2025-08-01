@@ -29,9 +29,9 @@ Focus purely on research - do not write any code. Use web search extensively. Re
 #### Agent 2: Technical Feasibility + Context7 Integration
 ```
 Task: Technical Architecture Research with Live Documentation
-Prompt: Analyze technical feasibility for "$ARGUMENTS". First use Context7 to get current documentation for relevant frameworks, then research and evaluate:
-- Auto-detect likely technology stacks from the project description
-- Use mcp__context7__resolve-library-id and mcp__context7__get-library-docs for identified technologies
+Prompt: Analyze technical feasibility for "$ARGUMENTS". First use Context7 to get current documentation for ANY relevant frameworks, then research and evaluate:
+- Auto-detect ALL likely technology stacks from the project description (Astro, React, Laravel, Sanity, Python, etc.)
+- Use mcp__context7__resolve-library-id and mcp__context7__get-library-docs for ALL identified technologies
 - Recommended technology stacks and frameworks (with Context7 docs)
 - System architecture patterns and best practices from live documentation
 - Integration possibilities with existing systems
@@ -39,7 +39,7 @@ Prompt: Analyze technical feasibility for "$ARGUMENTS". First use Context7 to ge
 - Technical challenges and solutions
 - Development effort estimation
 
-Focus on research only - no code implementation. Use Context7 for current docs, then web search for additional context. Return technical recommendations with pros/cons analysis and current documentation references.
+Focus on research only - no code implementation. Use Context7 for current docs for ANY tech stack, then web search for additional context. Return technical recommendations with pros/cons analysis and current documentation references.
 ```
 
 #### Agent 3: User Experience Research

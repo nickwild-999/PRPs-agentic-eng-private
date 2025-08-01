@@ -13,7 +13,8 @@ Generate a comprehensive task list for focused changes with validation.
    - Note test coverage
 
 2. **Pattern Research with Context7**
-   - **Auto-detect technologies**: Identify frameworks/libraries involved in the task
+   - **Auto-detect technologies**: Identify ANY frameworks/libraries involved in the task (Astro, React, Laravel, Sanity, etc.)
+   - **Universal task support**: Works with any technology stack for focused tasks
    - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
    - **Fetch task-specific docs**: Use mcp__context7__get-library-docs focusing on the specific functionality being modified
    - **Include in task context**: Integrate current documentation into task implementation

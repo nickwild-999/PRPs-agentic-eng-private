@@ -12,7 +12,8 @@ Transform rough ideas into comprehensive PRDs with rich visual documentation.
    - Map to business goals if provided
 
 2. **Context7 Documentation & Research**
-   - **Auto-detect technologies**: Analyze the project idea to identify potential frameworks/libraries needed
+   - **Auto-detect technologies**: Analyze the project idea to identify ANY frameworks/libraries needed (Astro, React, Laravel, Sanity, etc.)
+   - **Universal framework support**: Works with any technology stack combination
    - **Resolve library IDs**: Use mcp__context7__resolve-library-id for each identified technology
    - **Fetch architectural docs**: Use mcp__context7__get-library-docs focusing on architecture, best practices, and integration patterns
    - **Include in planning**: Integrate documentation into technical architecture and implementation sections

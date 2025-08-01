@@ -13,7 +13,8 @@ Generate a comprehensive specification-driven PRP with clear transformation goal
    - Note integration points
 
 2. **Desired State Research with Context7**
-   - **Auto-detect technologies**: Identify frameworks/libraries involved in the specification
+   - **Auto-detect technologies**: Identify ANY frameworks/libraries involved in the specification (Astro, React, Laravel, Sanity, etc.)
+   - **Universal migration support**: Works with any technology upgrade or migration scenario
    - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
    - **Fetch migration docs**: Use mcp__context7__get-library-docs focusing on migration, best practices, and upgrade patterns
    - **Include in spec**: Integrate current documentation into implementation strategy

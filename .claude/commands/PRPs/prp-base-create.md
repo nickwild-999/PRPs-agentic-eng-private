@@ -18,7 +18,8 @@ The AI agent only gets the context you are appending to the PRP and its own trai
    - Use the batch tools to spawn subagents to search the codebase for similar features/patterns
 
 2. **Context7 Documentation Integration**
-   - **Auto-detect technologies**: Analyze the feature request to identify frameworks/libraries (Laravel, React, Next.js, etc.)
+   - **Auto-detect technologies**: Analyze the feature request to identify ANY frameworks/libraries (Astro, React, Laravel, Sanity, etc.)
+   - **Universal support**: Works with frontend (Astro, React, Vue), backend (Laravel, Node.js), CMS (Sanity, Strapi), databases, and more
    - **Resolve library IDs**: Use mcp__context7__resolve-library-id for each detected technology
    - **Fetch current docs**: Use mcp__context7__get-library-docs with relevant topics for comprehensive documentation
    - **Include in PRP**: Integrate fetched documentation directly into the "All Needed Context" section
@@ -68,7 +69,18 @@ vendor/bin/phpstan analyse
 php artisan test --coverage
 ```
 
-**For Node.js/React Projects:**
+**For Astro Projects:**
+```bash
+# Syntax/Style
+npm run lint
+npm run type-check
+
+# Build Tests
+npm run build
+npm run test
+```
+
+**For React/Node.js Projects:**
 ```bash
 # Syntax/Style
 npm run lint
@@ -76,6 +88,16 @@ npm run type-check
 
 # Unit Tests
 npm run test
+```
+
+**For Python Projects:**
+```bash
+# Syntax/Style
+ruff check --fix
+mypy .
+
+# Unit Tests
+pytest tests/ -v
 ```
 
 The more validation gates the better, but make sure they are executable by the AI agent.

@@ -52,11 +52,11 @@ uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
 
 ### Key Claude Commands
 
-**PRP Creation (Auto-saves to PRPs/ directory with Context7 integration):**
-- `/prp-base-create` - Generate comprehensive PRPs with Context7 docs, research and auto-save
-- `/prp-planning-create` - Create project planning PRPs with Context7 architectural guidance and auto-save
-- `/prp-spec-create` - Generate specification PRPs with Context7 migration docs and auto-save
-- `/prp-task-create` - Create focused task PRPs with Context7 task-specific docs and auto-save
+**PRP Creation (Auto-saves to PRPs/ directory with Context7 integration for ANY tech stack):**
+- `/prp-base-create` - Generate comprehensive PRPs with Context7 docs for ANY framework (Astro, React, Laravel, etc.)
+- `/prp-planning-create` - Create project planning PRPs with Context7 architectural guidance for ANY stack
+- `/prp-spec-create` - Generate specification PRPs with Context7 migration docs for ANY technology
+- `/prp-task-create` - Create focused task PRPs with Context7 task-specific docs for ANY framework
 
 **PRP Execution:**
 - `/execute-base-prp` - Execute saved PRPs against codebase
@@ -86,15 +86,17 @@ uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
 ### Validation Gates (Must be Executable - Adapt to Your Stack)
 
 ```bash
-# Level 1: Syntax & Style (Examples by technology)
+# Level 1: Syntax & Style (Examples by technology - Context7 provides docs for ALL)
 # Laravel:
 vendor/bin/pint && vendor/bin/phpstan analyse
 
-# Node.js/React:
+# Astro/React/Node.js:
 npm run lint && npm run type-check
 
-# Python (if applicable):
+# Python:
 ruff check --fix && mypy .
+
+# Any other stack - Context7 provides appropriate validation patterns
 
 # Level 2: Unit Tests
 # Laravel:
