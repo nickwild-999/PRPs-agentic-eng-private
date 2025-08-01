@@ -11,15 +11,21 @@ Transform rough ideas into comprehensive PRDs with rich visual documentation.
    - Define success criteria
    - Map to business goals if provided
 
-2. **Market & Technical Research**
+2. **Context7 Documentation & Research**
+   - **Auto-detect technologies**: Analyze the project idea to identify potential frameworks/libraries needed
+   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for each identified technology
+   - **Fetch architectural docs**: Use mcp__context7__get-library-docs focusing on architecture, best practices, and integration patterns
+   - **Include in planning**: Integrate documentation into technical architecture and implementation sections
+
+3. **Market & Technical Research**
    - Do deep web search for the following:
      - Market analysis
      - Competitor analysis
-     - Technical feasibility study
+     - Technical feasibility study (enhanced with Context7 docs)
      - Best practice examples
      - Integration possibilities
 
-3. **User Research & Clarification**
+4. **User Research & Clarification**
      - Ask user for the following if not provided:
      - Target user personas?
      - Key pain points?
@@ -55,8 +61,9 @@ diagrams_needed:
 ```
 
 ### Research Integration
+- **Context7 Documentation**: Current framework docs with architectural guidance
 - **Market Analysis**: Include findings in PRD
-- **Technical Options**: Compare approaches
+- **Technical Options**: Compare approaches (informed by Context7 best practices)
 - **Risk Assessment**: With mitigation strategies
 - **Success Metrics**: Specific, measurable
 

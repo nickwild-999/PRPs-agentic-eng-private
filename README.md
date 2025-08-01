@@ -16,8 +16,11 @@ A PRP supplies an AI coding agent with everything it needs to deliver a vertical
 
 ## 🚀 Recent Enhancements
 
-### ✨ **Auto-Save PRP Creation**
+### ✨ **Auto-Save PRP Creation with Context7 Integration**
 - All PRP creation commands now automatically save to `PRPs/` directory
+- **Context7 Documentation**: Automatically pulls current framework docs during PRP creation
+- **Smart Technology Detection**: Auto-detects Laravel, React, Next.js, etc. from requests
+- **Live Documentation**: Includes up-to-date library docs directly in PRPs
 - Timestamped filenames (e.g., `user-auth-2025-01-01.md`)
 - No more manual copy/paste - fully automated workflow
 
@@ -29,8 +32,16 @@ A PRP supplies an AI coding agent with everything it needs to deliver a vertical
 
 ### 📋 **28+ Claude Commands**
 - Organized command structure for different development phases
+- **Context7 Documentation Integration**: Auto-pulls current framework docs
 - Parallel research agents for comprehensive context gathering
 - Technology-specific validation patterns
+
+### 🔄 **Context7 Auto-Documentation**
+- **Smart Detection**: Automatically identifies frameworks from requests (Laravel, React, Next.js, etc.)
+- **Live Documentation**: Fetches current, up-to-date library documentation during PRP creation
+- **Comprehensive Context**: Includes API references, best practices, and implementation patterns
+- **Framework Coverage**: Laravel 12, React 19, Next.js 15, Node.js, Python, and more
+- **Automatic Integration**: No manual documentation lookup required
 
 ---
 
@@ -157,22 +168,26 @@ composer require livewire/livewire filament/filament
 
 ### **1. Project Planning**
 ```bash
-# Create comprehensive project planning PRP (auto-saves)
+# Create comprehensive project planning PRP with Context7 docs (auto-saves)
 /prp-planning-create compliance accreditation assessment system
 
+# ✅ Auto-detects: Laravel, Livewire, Filament frameworks
+# ✅ Auto-fetches: Current Laravel 12, Livewire 3, Filament 3 documentation
 # ✅ Auto-saved to: PRPs/compliance-system-planning-2025-01-01.md
 ```
 
 ### **2. Implementation PRP Creation**
 ```bash
-# Create focused implementation PRPs (auto-saves)
+# Create focused implementation PRPs with Context7 docs (auto-saves)
 /prp-base-create user authentication system with Laravel Sanctum
 /prp-base-create multi-step Livewire forms with file uploads  
 /prp-base-create Filament admin panel with user management
 
-# ✅ Auto-saved to: PRPs/user-auth-2025-01-01.md
-# ✅ Auto-saved to: PRPs/multi-step-forms-2025-01-01.md
-# ✅ Auto-saved to: PRPs/filament-admin-2025-01-01.md
+# ✅ Auto-detects: Laravel, Sanctum, Livewire, Filament
+# ✅ Auto-fetches: Current documentation for each technology
+# ✅ Auto-saved to: PRPs/user-auth-2025-01-01.md (with Context7 docs)
+# ✅ Auto-saved to: PRPs/multi-step-forms-2025-01-01.md (with Context7 docs)
+# ✅ Auto-saved to: PRPs/filament-admin-2025-01-01.md (with Context7 docs)
 ```
 
 ### **3. Code Implementation**
@@ -200,14 +215,14 @@ ruff check --fix && mypy . && pytest tests/ -v
 
 ## 🛠️ Available Claude Commands
 
-### **PRP Creation (Auto-Save Enabled)**
-- `/prp-base-create` - Generate comprehensive PRPs with research and auto-save
-- `/prp-planning-create` - Create project planning PRPs with auto-save  
-- `/prp-spec-create` - Generate specification PRPs with auto-save
-- `/prp-task-create` - Create focused task PRPs with auto-save
+### **PRP Creation (Auto-Save + Context7 Enabled)**
+- `/prp-base-create` - Generate comprehensive PRPs with Context7 docs, research and auto-save
+- `/prp-planning-create` - Create project planning PRPs with Context7 architectural guidance and auto-save  
+- `/prp-spec-create` - Generate specification PRPs with Context7 migration docs and auto-save
+- `/prp-task-create` - Create focused task PRPs with Context7 task-specific docs and auto-save
 - `/TS-create-base-prp` - TypeScript-specific PRP creation
-- `/create-base-prp-parallel` - Parallel research PRP creation
-- `/create-planning-parallel` - Parallel planning PRP creation
+- `/create-base-prp-parallel` - Parallel research PRP creation with Context7 integration
+- `/create-planning-parallel` - Parallel planning PRP creation with Context7 docs
 
 ### **PRP Execution**
 - `/execute-base-prp` - Execute saved PRPs against codebase

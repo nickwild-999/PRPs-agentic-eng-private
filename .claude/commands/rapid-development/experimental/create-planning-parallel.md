@@ -26,18 +26,20 @@ Prompt: Research the market landscape for "$ARGUMENTS". Conduct deep analysis of
 Focus purely on research - do not write any code. Use web search extensively. Return a comprehensive market analysis report with specific data points and insights.
 ```
 
-#### Agent 2: Technical Feasibility
+#### Agent 2: Technical Feasibility + Context7 Integration
 ```
-Task: Technical Architecture Research
-Prompt: Analyze technical feasibility for "$ARGUMENTS". Research and evaluate:
-- Recommended technology stacks and frameworks
-- System architecture patterns and best practices
+Task: Technical Architecture Research with Live Documentation
+Prompt: Analyze technical feasibility for "$ARGUMENTS". First use Context7 to get current documentation for relevant frameworks, then research and evaluate:
+- Auto-detect likely technology stacks from the project description
+- Use mcp__context7__resolve-library-id and mcp__context7__get-library-docs for identified technologies
+- Recommended technology stacks and frameworks (with Context7 docs)
+- System architecture patterns and best practices from live documentation
 - Integration possibilities with existing systems
 - Scalability and performance considerations
 - Technical challenges and solutions
 - Development effort estimation
 
-Focus on research only - no code implementation. Use web search for current best practices. Return technical recommendations with pros/cons analysis.
+Focus on research only - no code implementation. Use Context7 for current docs, then web search for additional context. Return technical recommendations with pros/cons analysis and current documentation references.
 ```
 
 #### Agent 3: User Experience Research
@@ -79,8 +81,8 @@ Once all agents complete their research, synthesize the findings into:
 - Value proposition differentiation
 
 ### Technical Architecture Framework
-- Recommended technology stack
-- System design approach
+- Recommended technology stack (with Context7 documentation)
+- System design approach (based on current best practices)
 - Integration strategy
 - Scalability plan
 
@@ -148,11 +150,12 @@ Using the synthesized research and user input, create a comprehensive PRD follow
 - Wireframes and mockups needed
 
 ## 4. Technical Architecture
-[Insert Technical Feasibility Agent findings]
+[Insert Technical Feasibility Agent findings with Context7 docs]
 - System architecture (with Mermaid diagrams)
-- Technology stack
+- Technology stack (with current documentation)
 - Integration points
 - Scalability considerations
+- Framework-specific best practices (from Context7)
 
 ## 5. Security & Compliance
 [Insert Best Practices Agent findings]

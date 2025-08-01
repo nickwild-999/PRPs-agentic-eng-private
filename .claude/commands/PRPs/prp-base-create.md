@@ -17,15 +17,21 @@ The AI agent only gets the context you are appending to the PRP and its own trai
    - Check existing test patterns for validation approach
    - Use the batch tools to spawn subagents to search the codebase for similar features/patterns
 
-2. **External Research at scale**
+2. **Context7 Documentation Integration**
+   - **Auto-detect technologies**: Analyze the feature request to identify frameworks/libraries (Laravel, React, Next.js, etc.)
+   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for each detected technology
+   - **Fetch current docs**: Use mcp__context7__get-library-docs with relevant topics for comprehensive documentation
+   - **Include in PRP**: Integrate fetched documentation directly into the "All Needed Context" section
+
+3. **External Research at scale**
    - Create clear todos and spawn with instructions subagents to do deep research for similar features/patterns online and include urls to documentation and examples
-   - Library documentation (include specific URLs)
+   - Library documentation (include specific URLs + Context7 docs already fetched)
    - For critical pieces of documentation add a .md file to PRPs/ai_docs and reference it in the PRP with clear reasoning and instructions
    - Implementation examples (GitHub/StackOverflow/blogs)
    - Best practices and common pitfalls found during research
    - Use the batch tools to spawn subagents to search for similar features/patterns online and include urls to documentation and examples
 
-3. **User Clarification**
+4. **User Clarification**
    - Ask for clarification if you need it
 
 ## PRP Generation
@@ -34,6 +40,7 @@ Using PRPs/templates/prp_base.md as template:
 
 ### Critical Context at minimum to Include and pass to the AI agent as part of the PRP
 
+- **Context7 Documentation**: Current framework/library docs automatically fetched and integrated
 - **Documentation**: URLs with specific sections
 - **Code Examples**: Real snippets from codebase
 - **Gotchas**: Library quirks, version issues

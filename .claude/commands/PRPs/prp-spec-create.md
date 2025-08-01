@@ -12,8 +12,12 @@ Generate a comprehensive specification-driven PRP with clear transformation goal
    - Document technical debt
    - Note integration points
 
-2. **Desired State Research**
-   - Best practices for target state
+2. **Desired State Research with Context7**
+   - **Auto-detect technologies**: Identify frameworks/libraries involved in the specification
+   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
+   - **Fetch migration docs**: Use mcp__context7__get-library-docs focusing on migration, best practices, and upgrade patterns
+   - **Include in spec**: Integrate current documentation into implementation strategy
+   - Best practices for target state (enhanced with Context7 docs)
    - Implementation examples
    - Migration strategies
    - Risk assessment
@@ -98,9 +102,10 @@ task_name:
 
 ## Context Requirements
 
+- Context7 documentation for involved technologies
 - Current implementation details
 - Target architecture examples
-- Migration best practices
+- Migration best practices (from Context7 and web research)
 - Testing strategies
 
 ## Auto-Save Specification PRP

@@ -52,11 +52,11 @@ uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
 
 ### Key Claude Commands
 
-**PRP Creation (Auto-saves to PRPs/ directory):**
-- `/prp-base-create` - Generate comprehensive PRPs with research and auto-save
-- `/prp-planning-create` - Create project planning PRPs with auto-save
-- `/prp-spec-create` - Generate specification PRPs with auto-save
-- `/prp-task-create` - Create focused task PRPs with auto-save
+**PRP Creation (Auto-saves to PRPs/ directory with Context7 integration):**
+- `/prp-base-create` - Generate comprehensive PRPs with Context7 docs, research and auto-save
+- `/prp-planning-create` - Create project planning PRPs with Context7 architectural guidance and auto-save
+- `/prp-spec-create` - Generate specification PRPs with Context7 migration docs and auto-save
+- `/prp-task-create` - Create focused task PRPs with Context7 task-specific docs and auto-save
 
 **PRP Execution:**
 - `/execute-base-prp` - Execute saved PRPs against codebase
@@ -66,19 +66,20 @@ uv run PRPs/scripts/prp_runner.py --prp [prp-name] --output-format json
 
 ## Critical Success Patterns
 
-### The PRP Methodology
+### The PRP Methodology with Context7 Integration
 
-1. **Context is King**: Include ALL necessary documentation, examples, and caveats
-2. **Validation Loops**: Provide executable tests/lints the AI can run and fix
-3. **Information Dense**: Use keywords and patterns from the codebase
-4. **Progressive Success**: Start simple, validate, then enhance
+1. **Context is King**: Include ALL necessary documentation, examples, and caveats (now enhanced with live Context7 docs)
+2. **Auto-Documentation**: Framework docs automatically pulled from Context7 during PRP creation
+3. **Validation Loops**: Provide executable tests/lints the AI can run and fix
+4. **Information Dense**: Use keywords and patterns from the codebase
+5. **Progressive Success**: Start simple, validate, then enhance
 
 ### PRP Structure Requirements
 
 - **Goal**: Specific end state and desires
 - **Why**: Business value and user impact
 - **What**: User-visible behavior and technical requirements
-- **All Needed Context**: Documentation URLs, code examples, gotchas, patterns
+- **All Needed Context**: Context7 docs (auto-fetched), documentation URLs, code examples, gotchas, patterns
 - **Implementation Blueprint**: Pseudocode with critical details and task lists
 - **Validation Loop**: Executable commands for syntax, tests, integration
 

@@ -12,9 +12,13 @@ Generate a comprehensive task list for focused changes with validation.
    - Check for side effects
    - Note test coverage
 
-2. **Pattern Research**
+2. **Pattern Research with Context7**
+   - **Auto-detect technologies**: Identify frameworks/libraries involved in the task
+   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
+   - **Fetch task-specific docs**: Use mcp__context7__get-library-docs focusing on the specific functionality being modified
+   - **Include in task context**: Integrate current documentation into task implementation
    - Find similar changes in history
-   - Identify conventions to follow
+   - Identify conventions to follow (enhanced with Context7 patterns)
    - Check for helper functions
    - Review test patterns
 
@@ -33,6 +37,11 @@ Using TASK_PRP/PRPs/prp_task.md format:
 
 ```yaml
 context:
+  context7_docs:
+    - library: [detected framework]
+      documentation: [relevant sections]
+      focus: [specific methods/patterns]
+
   docs:
     - url: [API documentation]
       focus: [specific methods]

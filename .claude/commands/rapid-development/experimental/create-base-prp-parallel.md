@@ -26,18 +26,21 @@ Prompt: Analyze the codebase for patterns relevant to "$ARGUMENTS". Research and
 Focus on codebase exploration only - do not write code. Use Glob, Grep, and Read tools extensively. Return a comprehensive analysis of existing patterns with specific file paths and code examples to reference in the PRP.
 ```
 
-#### Agent 2: External Technical Research
+#### Agent 2: Context7 + External Technical Research
 ```
-Task: External Technical Research
-Prompt: Research external technical resources for "$ARGUMENTS". Investigate:
-- Library documentation and API references (include specific URLs)
+Task: Context7 Documentation + External Technical Research
+Prompt: Research technical resources for "$ARGUMENTS" using Context7 and external sources. First use Context7 for current documentation, then supplement with external research:
+- Auto-detect relevant frameworks/libraries from the feature description
+- Use mcp__context7__resolve-library-id for identified technologies
+- Use mcp__context7__get-library-docs to get current, comprehensive documentation
+- Library documentation and API references (Context7 + specific URLs)
 - Implementation examples from GitHub, StackOverflow, and technical blogs
-- Best practices and architectural patterns for similar features
+- Best practices and architectural patterns for similar features (Context7 enhanced)
 - Common pitfalls, gotchas, and solutions
 - Performance considerations and optimization techniques
 - Security considerations and vulnerability patterns
 
-Focus purely on research - do not write code. Use web search extensively. Return comprehensive technical research with specific URLs, code examples, and implementation guidance.
+Focus purely on research - do not write code. Use Context7 first, then web search extensively. Return comprehensive technical research with Context7 docs, specific URLs, code examples, and implementation guidance.
 ```
 
 #### Agent 3: Testing & Validation Strategy
@@ -79,7 +82,7 @@ Using PRPs/templates/prp_base.md as the foundation, integrate the research findi
 #### Critical Context Integration
 From the research agents, include:
 - **Codebase Patterns**: Specific file paths and code examples from Agent 1
-- **Technical Documentation**: URLs and specific sections from Agent 2
+- **Context7 + Technical Documentation**: Current framework docs and URLs from Agent 2
 - **Testing Strategies**: Validation approaches and patterns from Agent 3
 - **Project Documentation**: Relevant ai_docs and configuration from Agent 4
 
@@ -128,6 +131,7 @@ Generate a complete PRP including:
 
 ## All Needed Context
 ### Documentation & References
+- context7: [Current framework documentation automatically fetched]
 - url: [Specific URLs from external research]
 - file: [Specific file paths from codebase analysis]
 - docfile: [Relevant PRPs/ai_docs/ files]
