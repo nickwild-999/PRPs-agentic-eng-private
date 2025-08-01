@@ -2,6 +2,12 @@
 
 A comprehensive framework for AI-assisted development with **automated PRP creation**, **multi-stack support**, and **production-ready workflows**. Delivers one-pass implementation success through context engineering and structured validation.
 
+> **📍 Original Repository:** https://github.com/Wirasm/PRPs-agentic-eng  
+> **🎥 Video Walkthrough:** https://www.youtube.com/watch?v=KVOZ9s1S9Gk  
+> **👨‍💻 Created by:** [Rasmus Widing](https://www.rasmuswiding.com/) (@wirasm)
+> 
+> This enhanced fork includes auto-save functionality, Laravel 12 support, and multi-stack improvements.
+
 ## 🎯 What is PRP?
 
 **Product Requirement Prompt (PRP) = PRD + curated codebase intelligence + agent/runbook**
@@ -87,22 +93,32 @@ I spent considerable time creating these resources and prompts. If you find valu
 
 ## 🚀 Quick Start
 
-### Option 1: Use Private Fork (Recommended for Personal Use)
+### Option 1: Use Original Repository (Recommended)
 
-If you want your own private copy with all enhancements:
+For the latest official version:
 
 ```bash
-# Clone the private fork
+# Clone the original repository
+git clone https://github.com/Wirasm/PRPs-agentic-eng.git
+cd PRPs-agentic-eng
+```
+
+### Option 2: Use Enhanced Private Fork (With Auto-Save Features)
+
+If you want the enhanced version with auto-save functionality and Laravel 12 support:
+
+```bash
+# Clone the enhanced private fork
 git clone https://github.com/nickwild-999/PRPs-agentic-eng-private.git
 cd PRPs-agentic-eng-private
 
-# Keep updated with original
+# Keep updated with original repository
 git remote add upstream https://github.com/Wirasm/PRPs-agentic-eng.git
 git fetch upstream
 git merge upstream/development
 ```
 
-### Option 2: Copy Framework to Existing Project
+### Option 3: Copy Framework to Existing Project
 
 ```bash
 # Copy framework to your project
@@ -115,7 +131,7 @@ cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
 ```
 
-### Option 3: Laravel 12 Complete Setup
+### Option 4: Laravel 12 Complete Setup
 
 For complete Laravel 12 setup with Livewire 3 + Filament 3:
 
@@ -361,15 +377,38 @@ git push origin development
 
 ---
 
+## 🙏 Acknowledgments
+
+This enhanced fork builds upon the excellent work of **[Rasmus Widing](https://www.rasmuswiding.com/)** (@wirasm) and the original **PRPs Agentic Engineering Framework**.
+
+### **Original Framework:**
+- **Repository**: https://github.com/Wirasm/PRPs-agentic-eng
+- **Creator**: Rasmus Widing - AI Engineering consultant and workshop leader
+- **Methodology**: Context Engineering principles and PRP development
+- **Community**: Active workshops and training programs
+
+### **Enhancements in This Fork:**
+- Auto-save PRP creation functionality
+- Laravel 12 with Livewire 3 + Filament 3 support
+- Multi-stack validation patterns
+- Comprehensive setup guides
+- Technology-specific CLAUDE.md files
+
 ## 🤝 Contributing
 
-This framework is actively maintained and enhanced. Contributions welcome:
+### **To Original Repository:**
+Please contribute to the main project at: https://github.com/Wirasm/PRPs-agentic-eng
 
-1. Fork the repository
+### **To This Enhanced Fork:**
+Contributions to enhancements welcome:
+
+1. Fork this repository
 2. Create feature branch
 3. Add comprehensive tests
 4. Update documentation
 5. Submit pull request
+
+**Note**: Major framework improvements should be submitted to the original repository first.
 
 ---
 
