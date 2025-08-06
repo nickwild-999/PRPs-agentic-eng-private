@@ -42,6 +42,31 @@ A PRP supplies an AI coding agent with everything it needs to deliver a vertical
 
 ---
 
+## 🏗️ Framework Architecture
+
+### **Command-Driven System**
+- **28+ pre-configured Claude Code commands** in `.claude/commands/`
+- Commands organized by function:
+  - `PRPs/` - PRP creation and execution workflows  
+  - `development/` - Core utilities (prime-core, onboarding, debug)
+  - `code-quality/` - Review and refactoring commands
+  - `rapid-development/experimental/` - Parallel PRP creation tools
+  - `git-operations/` - Smart git operations and conflict resolution
+
+### **Auto-Save PRP Templates**
+- **PRP Templates** in `PRPs/templates/` with structured validation loops
+- **Automated saving** - no manual file management required
+- **Context-Rich Approach** - comprehensive documentation and examples included
+- **Validation-First Design** - executable validation gates for each technology stack
+
+### **Multi-Stack CLAUDE.md Files**
+- `claude_md_files/CLAUDE-LARAVEL-12.md` - Laravel 12 with Livewire 3 + Filament 3
+- `claude_md_files/CLAUDE-REACT.md` - React applications
+- `claude_md_files/CLAUDE-NEXTJS-15.md` - Next.js 15 applications  
+- `claude_md_files/CLAUDE-PYTHON-BASIC.md` - Python projects
+
+---
+
 ## 🚀 Quick Start
 
 📖 **For complete setup instructions with any framework, see:** [**PROJECT-SETUP-GUIDE.md**](PROJECT-SETUP-GUIDE.md)
@@ -74,30 +99,68 @@ composer create-project laravel/laravel . "^12.0"
 /execute-base-prp PRPs/dashboard-*.md
 ```
 
----
+For the latest official version:
 
-## 🏗️ Framework Architecture
+```bash
+# Clone the original repository
+git clone https://github.com/Wirasm/PRPs-agentic-eng.git
+cd PRPs-agentic-eng
+```
 
-### **Command-Driven System**
-- **28+ pre-configured Claude Code commands** in `.claude/commands/`
-- Commands organized by function:
-  - `PRPs/` - PRP creation and execution workflows  
-  - `development/` - Core utilities (prime-core, onboarding, debug)
-  - `code-quality/` - Review and refactoring commands
-  - `rapid-development/experimental/` - Parallel PRP creation tools
-  - `git-operations/` - Smart git operations and conflict resolution
+### Option 2: Use Enhanced Private Fork (With Auto-Save Features)
 
-### **Auto-Save PRP Templates**
-- **PRP Templates** in `PRPs/templates/` with structured validation loops
-- **Automated saving** - no manual file management required
-- **Context-Rich Approach** - comprehensive documentation and examples included
-- **Validation-First Design** - executable validation gates for each technology stack
+If you want the enhanced version with auto-save functionality and Laravel 12 support:
 
-### **Multi-Stack CLAUDE.md Files**
-- `claude_md_files/CLAUDE-LARAVEL-12.md` - Laravel 12 with Livewire 3 + Filament 3
-- `claude_md_files/CLAUDE-REACT.md` - React applications
-- `claude_md_files/CLAUDE-NEXTJS-15.md` - Next.js 15 applications  
-- `claude_md_files/CLAUDE-PYTHON-BASIC.md` - Python projects
+```bash
+# Clone the enhanced private fork
+git clone https://github.com/nickwild-999/PRPs-agentic-eng-private.git
+cd PRPs-agentic-eng-private
+
+# Keep updated with original repository
+git remote add upstream https://github.com/Wirasm/PRPs-agentic-eng.git
+git fetch upstream
+git merge upstream/development
+```
+
+### Option 3: Copy Framework to Existing Project
+
+```bash
+# Copy framework to your project
+cp -r /path/to/PRPs-agentic-eng/.claude .
+cp -r /path/to/PRPs-agentic-eng/PRPs .
+
+# Copy appropriate CLAUDE.md for your stack
+cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
+# or
+cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
+```
+
+### Option 4: Framework-Specific Complete Setup
+
+For complete setup with any framework:
+
+```bash
+# Follow the comprehensive setup guide for any stack
+cat PROJECT-SETUP-GUIDE.md
+
+# Quick start examples:
+
+# Laravel project:
+mkdir my-laravel-project && cd my-laravel-project
+cp -r /path/to/PRPs-agentic-eng/.claude .
+cp -r /path/to/PRPs-agentic-eng/PRPs .
+cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
+composer create-project laravel/laravel . "^12.0"
+
+# Astro project:
+mkdir my-astro-project && cd my-astro-project
+cp -r /path/to/PRPs-agentic-eng/.claude .
+cp -r /path/to/PRPs-agentic-eng/PRPs .
+cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
+npm create astro@latest . -- --template minimal --typescript
+
+# See PROJECT-SETUP-GUIDE.md for complete instructions for any framework
+```
 
 ---
 
@@ -221,7 +284,7 @@ ruff check --fix && mypy . && pytest tests/ -v
 - `/prp-planning-create` - Create project planning PRPs with Context7 architectural guidance and auto-save  
 - `/prp-spec-create` - Generate specification PRPs with Context7 migration docs and auto-save
 - `/prp-task-create` - Create focused task PRPs with Context7 task-specific docs and auto-save
-- `/init` - Initialize PRP framework in any project (auto-detects stack)
+- `/TS-create-base-prp` - TypeScript-specific PRP creation
 - `/create-base-prp-parallel` - Parallel research PRP creation with Context7 integration
 - `/create-planning-parallel` - Parallel planning PRP creation with Context7 docs
 
@@ -342,6 +405,25 @@ PRPs-agentic-eng/
 
 ---
 
+## 🔄 Keep Your Fork Updated
+
+If using the private fork, stay updated with the original repository:
+
+```bash
+# Add upstream remote (one time setup)
+git remote add upstream https://github.com/Wirasm/PRPs-agentic-eng.git
+
+# Update your fork
+git fetch upstream
+git checkout development  
+git merge upstream/development
+
+# Push updates to your private fork
+git push origin development
+```
+
+---
+
 ## 🎯 Best Practices
 
 ### **PRP Creation**
@@ -352,7 +434,7 @@ PRPs-agentic-eng/
 5. **Review auto-saved PRPs** before execution
 
 ### **Technology Selection**
-1. **Use `/init` command** to auto-detect and setup your stack
+1. **Copy appropriate CLAUDE.md** for your tech stack
 2. **Customize validation commands** for your specific setup
 3. **Follow framework conventions** (Laravel, React, etc.)
 4. **Use recommended packages** from the CLAUDE.md guides
@@ -371,23 +453,42 @@ PRPs-agentic-eng/
 - **Context7 Integration Guide**: `CONTEXT7-INTEGRATION-GUIDE.md` - Complete Context7 documentation integration
 - **AI Documentation**: `PRPs/ai_docs/` - Curated Claude Code documentation
 - **Example PRPs**: `PRPs/example-*.md` - Real-world PRP examples
+- **Video Walkthrough**: https://www.youtube.com/watch?v=KVOZ9s1S9Gk
 
 ---
 
 ## 🙏 Acknowledgments
 
-This enhanced private fork builds upon the excellent work of **[Rasmus Widing](https://www.rasmuswiding.com/)** (@wirasm) and the original **PRPs Agentic Engineering Framework**.
+This enhanced fork builds upon the excellent work of **[Rasmus Widing](https://www.rasmuswiding.com/)** (@wirasm) and the original **PRPs Agentic Engineering Framework**.
 
 ### **Original Framework:**
+- **Repository**: https://github.com/Wirasm/PRPs-agentic-eng
 - **Creator**: Rasmus Widing - AI Engineering consultant and workshop leader
 - **Methodology**: Context Engineering principles and PRP development
+- **Community**: Active workshops and training programs
 
 ### **Enhancements in This Fork:**
-- Auto-save PRP creation functionality with `/init` command
+- Auto-save PRP creation functionality
 - Laravel 12 with Livewire 3 + Filament 3 support
-- Multi-stack validation patterns and Context7 integration
-- Comprehensive setup guides for any framework
+- Multi-stack validation patterns
+- Comprehensive setup guides
 - Technology-specific CLAUDE.md files
+
+## 🤝 Contributing
+
+### **To Original Repository:**
+Please contribute to the main project at: https://github.com/Wirasm/PRPs-agentic-eng
+
+### **To This Enhanced Fork:**
+Contributions to enhancements welcome:
+
+1. Fork this repository
+2. Create feature branch
+3. Add comprehensive tests
+4. Update documentation
+5. Submit pull request
+
+**Note**: Major framework improvements should be submitted to the original repository first.
 
 ---
 
@@ -401,6 +502,4 @@ MIT License - see LICENSE file for details.
 
 ---
 
-*Last updated: August 2025 - Enhanced with `/init` command, auto-save functionality, and multi-stack architecture.*
-
----
+*Last updated: January 2025 - Enhanced with Laravel 12 support, auto-save functionality, and multi-stack architecture.*

@@ -4,30 +4,51 @@ Generate a comprehensive task list for focused changes with validation.
 
 ## Task: $ARGUMENTS
 
-## Analysis Process
+## Automatic Subagent Task Analysis
 
-1. **Scope Definition**
-   - Identify all affected files
-   - Map dependencies
-   - Check for side effects
-   - Note test coverage
+**IMPORTANT**: This command now uses specialized subagents for comprehensive task analysis and validation.
 
-2. **Pattern Research with Context7**
-   - **Auto-detect technologies**: Identify ANY frameworks/libraries involved in the task (Astro, React, Laravel, Sanity, etc.)
-   - **Universal task support**: Works with any technology stack for focused tasks
-   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
-   - **Fetch task-specific docs**: Use mcp__context7__get-library-docs focusing on the specific functionality being modified
-   - **Include in task context**: Integrate current documentation into task implementation
-   - Find similar changes in history
-   - Identify conventions to follow (enhanced with Context7 patterns)
-   - Check for helper functions
-   - Review test patterns
+### Automatic Subagent Usage
+- **Codebase Pattern Analyst**: Scope analysis and dependency mapping
+- **Context7 Documentation Agent**: Task-specific technology documentation
+- **PRP Research Specialist**: Similar change pattern research
+- **PRP Quality Validator**: Task specification quality validation
 
-3. **User Clarification**
-   - Confirm change scope
-   - Verify acceptance criteria
-   - Check deployment considerations
-   - Identify blockers
+### Analysis Process (Enhanced by Subagents)
+
+1. **Comprehensive Scope Analysis** (Codebase Pattern Analyst)
+   **CRITICAL**: When delegating, provide:
+   - **Complete task description**: "$ARGUMENTS" with specific change requirements
+   - **Current system context**: Existing implementation and architecture
+   - **Change boundaries**: What should and shouldn't be modified
+   - **Impact assessment**: Side effects and integration considerations
+   
+   The analyst will:
+   - Identify ALL affected files and dependencies systematically
+   - Map change impact across the codebase
+   - Check for potential side effects and conflicts
+   - Note current test coverage for affected areas
+   - Document rollback requirements and safety constraints
+
+2. **Task-Specific Documentation** (Context7 Documentation Agent)
+   - Auto-detects technologies involved in the specific task
+   - Fetches focused documentation for the exact functionality being modified
+   - Provides method-specific API references and patterns
+   - Includes best practices for the type of change being made
+
+3. **Change Pattern Research** (PRP Research Specialist)
+   Conducts focused research on:
+   - Similar changes in project history and patterns
+   - Conventions and patterns to follow for this change type
+   - Helper functions and utilities available for reuse
+   - Test patterns and validation approaches for similar changes
+   - Risk mitigation strategies for this type of modification
+
+4. **User Clarification**
+   - Confirm change scope and boundaries
+   - Verify acceptance criteria and success metrics
+   - Check deployment considerations and timing
+   - Identify potential blockers or dependencies
 
 ## PRP Generation
 
@@ -100,13 +121,27 @@ ACTION path/to/file:
 - Note security concerns
 - Document assumptions
 
-## Auto-Save Task PRP
+## Quality Validation & Auto-Save
 
-**CRITICAL: After generating the complete task document, you MUST automatically save it using the Write tool.**
+### Task Specification Quality Validation (PRP Quality Validator)
+Before saving, the PRP Quality Validator subagent will automatically validate:
+- **Scope Completeness** (target: 8+/10): All affected files and dependencies identified
+- **Task Clarity** (target: 8+/10): Each task action clear and executable
+- **Validation Coverage** (target: 8+/10): Comprehensive validation and rollback strategies
+- **Risk Management** (target: 8+/10): Side effects identified with mitigation strategies
+
+**CRITICAL**: When delegating to subagents, you MUST instruct them to save the final document:
+- "After completing the task analysis and validation, you MUST save the complete task PRP using the Write tool"
+- "Generate descriptive filename and save to PRPs/{task-name}-task-{YYYY-MM-DD}.md"
+- "Do NOT just display content - you MUST save to file and confirm the save"
+
+### Auto-Save Task PRP
+
+**CRITICAL: After quality validation passes, automatically save using the Write tool.**
 
 1. **Generate filename**: Create a descriptive filename based on the task (e.g., "update-auth-middleware", "add-logging-system")
 2. **Use Write tool**: Save the complete task content to `PRPs/{task-name}-task-{YYYY-MM-DD}.md`
-3. **Confirm save**: Display success message with the exact file path
+3. **Confirm save**: Display success message with exact file path and quality scores
 4. **Next steps**: Inform user they can review the task PRP and execute it when ready
 
 **Do NOT just display the task content - you MUST save it to a file.**

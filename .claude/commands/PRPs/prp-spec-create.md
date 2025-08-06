@@ -4,25 +4,44 @@ Generate a comprehensive specification-driven PRP with clear transformation goal
 
 ## Specification: $ARGUMENTS
 
-## Analysis Process
+## Automatic Subagent Specification Process
 
-1. **Current State Assessment**
-   - Map existing implementation
-   - Identify pain points
-   - Document technical debt
-   - Note integration points
+**IMPORTANT**: This command now uses specialized subagents for comprehensive specification analysis and validation.
 
-2. **Desired State Research with Context7**
-   - **Auto-detect technologies**: Identify ANY frameworks/libraries involved in the specification (Astro, React, Laravel, Sanity, etc.)
-   - **Universal migration support**: Works with any technology upgrade or migration scenario
-   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for detected technologies
-   - **Fetch migration docs**: Use mcp__context7__get-library-docs focusing on migration, best practices, and upgrade patterns
-   - **Include in spec**: Integrate current documentation into implementation strategy
-   - Best practices for target state (enhanced with Context7 docs)
-   - Implementation examples
-   - Migration strategies
-   - Risk assessment
-   - Dependency mapping
+### Automatic Subagent Usage
+- **PRP Research Specialist**: Comprehensive migration and transformation research
+- **Context7 Documentation Agent**: Technology upgrade and migration documentation
+- **Codebase Pattern Analyst**: Current state analysis and transformation planning
+- **PRP Quality Validator**: Specification quality validation before saving
+
+### Analysis Process (Enhanced by Subagents)
+
+1. **Current State Analysis** (Codebase Pattern Analyst)
+   **CRITICAL**: When delegating, provide:
+   - **Specification request**: "$ARGUMENTS" with complete transformation goals
+   - **Current system context**: Existing implementation and architecture
+   - **Pain points**: Known issues and technical debt to address
+   - **Integration constraints**: Existing systems that must be maintained
+   
+   The analyst will:
+   - Map existing implementation comprehensively
+   - Identify pain points and technical debt systematically
+   - Document current integration points and dependencies
+   - Analyze transformation complexity and risks
+
+2. **Migration & Transformation Research** (PRP Research Specialist)
+   Conducts parallel research across:
+   - Best practices for transformation scenarios
+   - Migration strategies and implementation examples
+   - Risk assessment and mitigation approaches
+   - Dependency mapping and sequencing strategies
+   - Performance and compatibility considerations
+
+3. **Technology Upgrade Documentation** (Context7 Documentation Agent)
+   - Auto-detects ALL technologies involved in the specification
+   - Fetches current migration and upgrade documentation
+   - Provides version-specific migration guides and breaking changes
+   - Includes best practices for technology transitions and integrations
 
 3. **User Clarification**
    - Confirm transformation goals
@@ -109,13 +128,27 @@ task_name:
 - Migration best practices (from Context7 and web research)
 - Testing strategies
 
-## Auto-Save Specification PRP
+## Quality Validation & Auto-Save
 
-**CRITICAL: After generating the complete specification document, you MUST automatically save it using the Write tool.**
+### Specification Quality Validation (PRP Quality Validator)
+Before saving, the PRP Quality Validator subagent will automatically validate:
+- **Current State Documentation** (target: 8+/10): Existing system thoroughly analyzed
+- **Transformation Clarity** (target: 8+/10): Desired state and path clearly defined
+- **Task Specification** (target: 8+/10): Implementation tasks detailed and executable
+- **Risk Management** (target: 8+/10): Risks identified with mitigation strategies
+
+**CRITICAL**: When delegating to subagents, you MUST instruct them to save the final specification:
+- "After completing specification analysis and validation, you MUST save the complete specification PRP using the Write tool"
+- "Generate descriptive filename and save to PRPs/{spec-name}-spec-{YYYY-MM-DD}.md"
+- "Do NOT just display specification content - you MUST save to file and confirm the save with exact file path"
+
+### Auto-Save Specification PRP
+
+**CRITICAL: After quality validation passes, automatically save using the Write tool.**
 
 1. **Generate filename**: Create a descriptive filename based on the specification (e.g., "database-migration-spec", "api-refactor-spec")
 2. **Use Write tool**: Save the complete specification content to `PRPs/{spec-name}-spec-{YYYY-MM-DD}.md`
-3. **Confirm save**: Display success message with the exact file path
+3. **Confirm save**: Display success message with exact file path and quality scores
 4. **Next steps**: Inform user they can review the specification PRP and execute it when ready
 
 **Do NOT just display the specification content - you MUST save it to a file.**

@@ -4,13 +4,19 @@
 
 Generate a comprehensive PRP using parallel research agents for maximum context gathering efficiency and depth. This command leverages multiple AI agents working simultaneously to research different aspects of the feature, ensuring comprehensive context is passed to enable self-validation and iterative refinement.
 
-## Parallel Research Phase
+## Automatic Subagent Parallel Research
 
-**IMPORTANT**: Execute the following 4 research agents simultaneously using multiple Agent tool calls in a single response to maximize research efficiency.
+**IMPORTANT**: This command now uses the PRP Research Specialist subagent for comprehensive parallel research coordination. The specialized subagent will automatically handle all research dimensions simultaneously.
 
-### Research Agent Coordination
+### Automatic Subagent Usage
+- **PRP Research Specialist**: Automatically coordinates all 4 research streams in parallel
+- **Context7 Documentation Agent**: Integrated within research for automatic technology detection
+- **Codebase Pattern Analyst**: Integrated for systematic pattern analysis
+- **PRP Quality Validator**: Automatically validates final PRP quality
 
-Launch these agents concurrently - do not wait for one to complete before starting the next:
+### Enhanced Research Coordination (Handled by Subagents)
+
+The PRP Research Specialist will automatically:
 
 #### Agent 1: Codebase Pattern Analysis
 ```

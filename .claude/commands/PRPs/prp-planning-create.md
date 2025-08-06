@@ -4,27 +4,43 @@ Transform rough ideas into comprehensive PRDs with rich visual documentation.
 
 ## Idea: $ARGUMENTS
 
-## Discovery Process
+## Automatic Subagent Planning Process
 
-1. **Concept Expansion**
-   - Break down the core idea
-   - Define success criteria
-   - Map to business goals if provided
+**IMPORTANT**: This command now uses specialized subagents for comprehensive planning research and quality validation.
 
-2. **Context7 Documentation & Research**
-   - **Auto-detect technologies**: Analyze the project idea to identify ANY frameworks/libraries needed (Astro, React, Laravel, Sanity, etc.)
-   - **Universal framework support**: Works with any technology stack combination
-   - **Resolve library IDs**: Use mcp__context7__resolve-library-id for each identified technology
-   - **Fetch architectural docs**: Use mcp__context7__get-library-docs focusing on architecture, best practices, and integration patterns
-   - **Include in planning**: Integrate documentation into technical architecture and implementation sections
+### Automatic Subagent Usage
+- **PRP Research Specialist**: Comprehensive market, technical, and architectural research
+- **Context7 Documentation Agent**: Technology detection and architectural documentation
+- **Codebase Pattern Analyst**: Current system analysis for integration planning
+- **PRP Quality Validator**: Planning document quality validation before saving
 
-3. **Market & Technical Research**
-   - Do deep web search for the following:
-     - Market analysis
-     - Competitor analysis
-     - Technical feasibility study (enhanced with Context7 docs)
-     - Best practice examples
-     - Integration possibilities
+### Discovery Process (Enhanced by Subagents)
+
+1. **Comprehensive Planning Research** (PRP Research Specialist)
+   **CRITICAL**: When delegating to the specialist, provide:
+   - **Complete project idea**: "$ARGUMENTS" with full vision and requirements
+   - **Business context**: Goals, success metrics, target users, constraints
+   - **Technical context**: Existing systems, technology preferences, integration needs
+   - **Market context**: Competitive landscape, user needs, industry standards
+   
+   The specialist will conduct parallel research across:
+   - Market analysis and competitive landscape
+   - Technical feasibility with Context7 architectural guidance
+   - Best practices and implementation examples
+   - Integration possibilities and technology options
+   - Risk assessment and mitigation strategies
+
+2. **Technology Architecture Research** (Context7 Documentation Agent)
+   - Auto-detects ALL relevant technologies for the project idea
+   - Fetches current architectural documentation and best practices
+   - Provides integration patterns and technology combination guidance
+   - Includes migration paths and technology evolution strategies
+
+3. **Current System Analysis** (Codebase Pattern Analyst) 
+   - Analyzes existing codebase for integration patterns
+   - Identifies architectural constraints and opportunities
+   - Documents current technology stack and conventions
+   - Maps integration points for new features
 
 4. **User Research & Clarification**
      - Ask user for the following if not provided:
@@ -131,13 +147,27 @@ diagrams_needed:
 10. Appendices
 ```
 
-## Auto-Save Planning PRP
+## Quality Validation & Auto-Save
 
-**CRITICAL: After generating the complete planning document, you MUST automatically save it using the Write tool.**
+### Planning Document Quality Validation (PRP Quality Validator)
+Before saving, the PRP Quality Validator subagent will automatically validate:
+- **Planning Completeness** (target: 8+/10): All sections comprehensive and actionable
+- **Research Quality** (target: 8+/10): Market, technical, and competitive analysis thorough
+- **Architecture Clarity** (target: 8+/10): Technical approach clear and well-documented
+- **Implementation Readiness** (target: 8+/10): Ready for breakdown into implementation PRPs
+
+**CRITICAL**: When delegating to subagents, you MUST instruct them to save the final planning document:
+- "After completing planning research and validation, you MUST save the complete planning PRP using the Write tool"
+- "Generate descriptive filename and save to PRPs/{project-name}-planning-{YYYY-MM-DD}.md"
+- "Do NOT just display planning content - you MUST save to file and confirm the save with exact file path"
+
+### Auto-Save Planning PRP
+
+**CRITICAL: After quality validation passes, automatically save using the Write tool.**
 
 1. **Generate filename**: Create a descriptive filename based on the project (e.g., "compliance-system-planning", "ecommerce-platform-planning")
 2. **Use Write tool**: Save the complete planning content to `PRPs/{project-name}-planning-{YYYY-MM-DD}.md`
-3. **Confirm save**: Display success message with the exact file path
+3. **Confirm save**: Display success message with exact file path and quality scores
 4. **Next steps**: Inform user they can review the planning PRP and create implementation PRPs when ready
 
 **Do NOT just display the planning content - you MUST save it to a file.**

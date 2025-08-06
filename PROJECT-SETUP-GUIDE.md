@@ -24,48 +24,117 @@ cd my-awesome-project
 git init
 ```
 
-### 1.2 Copy PRPs Framework
+### 1.2 Install Your Base Framework First
+```bash
+# Install your chosen framework BEFORE setting up PRPs
+# Laravel:
+composer create-project laravel/laravel . "^12.0"
+
+# Astro:
+npm create astro@latest . -- --template minimal --typescript
+
+# React with Vite:
+npm create vite@latest . -- --template react-ts
+
+# Next.js:
+npx create-next-app@latest . --typescript --tailwind --app
+
+# Python FastAPI:
+uv init && uv add fastapi uvicorn
+```
+
+### 1.3 Initialize PRP Framework (NEW - Recommended Method)
+```bash
+# Auto-detect your tech stack and set up PRPs framework
+/init
+
+# ✅ Auto-detects: Laravel/Astro/React/Next.js/Python from project files
+# ✅ Copies: All PRP commands and framework structure (.claude/, PRPs/)
+# ✅ Installs: Appropriate CLAUDE.md for your detected stack
+# ✅ Sets up: Validation commands for your technology
+```
+
+**What `/init` does:**
+- Scans your project for `package.json`, `composer.json`, `pyproject.toml`
+- Automatically detects your framework and copies matching CLAUDE.md
+- Sets up the complete PRP command structure
+- No manual file copying required!
+
+### 1.4 Manual Setup (Alternative Method)
+
+If you prefer manual setup or `/init` doesn't detect your stack correctly:
+
 ```bash
 # Copy the entire PRPs framework to your project
 cp -r /path/to/PRPs-agentic-eng/.claude .
 cp -r /path/to/PRPs-agentic-eng/PRPs .
 
-# Optional: Copy Python runner if you want to use it
-cp -r /path/to/PRPs-agentic-eng/pyproject.toml .
-```
-
-### 1.3 Setup Framework-Specific CLAUDE.md
-
-Choose the appropriate CLAUDE.md file for your technology stack:
-
-#### For Laravel Projects
-```bash
+# Choose the appropriate CLAUDE.md file for your technology stack:
+# Laravel:
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-LARAVEL-12.md ./CLAUDE.md
-```
 
-#### For React Projects
-```bash
+# React:
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
-```
 
-#### For Next.js Projects
-```bash
+# Next.js:
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-NEXTJS-15.md ./CLAUDE.md
-```
 
-#### For Python Projects
-```bash
+# Python:
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-PYTHON-BASIC.md ./CLAUDE.md
-```
 
-#### For Custom Stack
-```bash
+# Custom Stack:
 # Start with the closest match and customize
 cp /path/to/PRPs-agentic-eng/claude_md_files/CLAUDE-REACT.md ./CLAUDE.md
-# Then edit CLAUDE.md to match your specific stack
 ```
 
 **Note**: The file MUST be named exactly `CLAUDE.md` in your project root.
+
+---
+
+## 🏢 Working with Existing Projects
+
+If you're adding the PRP framework to an existing project:
+
+### Existing Project Setup
+```bash
+# 1. Navigate to your existing project
+cd my-existing-project
+
+# 2. Initialize PRP framework (detects existing stack)
+/init
+# ✅ Scans existing project files
+# ✅ Detects your current tech stack automatically
+# ✅ Installs appropriate CLAUDE.md for your stack
+
+# 3. Prime Claude with your project context
+/prime-core
+# ✅ Analyzes project structure and dependencies
+# ✅ Reads existing CLAUDE.md, README.md, key source files
+# ✅ Understands your existing patterns and conventions
+
+# 4. Create PRPs based on existing codebase
+/prp-base-create add user dashboard with analytics charts and export functionality
+# ✅ Uses existing project context + Context7 framework docs
+# ✅ Respects your current architecture and patterns
+# ✅ Auto-saves with comprehensive implementation guide
+```
+
+### Multi-Feature PRPs for Existing Projects
+```bash
+# You can describe multiple related features in one PRP:
+/prp-base-create add user roles and permissions system, admin dashboard for user management, and audit logging for all user actions
+
+# Or create separate focused PRPs:
+/prp-base-create implement payment processing with Stripe integration for existing e-commerce system
+/prp-base-create add real-time chat feature using WebSockets to current Laravel app
+/prp-base-create create admin panel for managing blog posts in existing Next.js blog
+```
+
+### Existing Project Workflow Summary
+1. **Detect & Setup**: `/init` (auto-detects your stack)
+2. **Context Gathering**: `/prime-core` (understands your codebase)
+3. **Feature Planning**: `/prp-base-create [describe your goals]`
+4. **Implementation**: `/execute-base-prp PRPs/your-feature-*.md`
 
 ---
 
